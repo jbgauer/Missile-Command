@@ -71,10 +71,17 @@ mp1_poke:
 
 .globl mp1_rtc_tasklet
 mp1_rtc_tasklet:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
 
 		CALL update_missiles
 		CALL redraw_bases
 		CALL redraw_crosshair
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		ret
 
 # int mp1_ioctl(unsigned long arg, unsigned int cmd)
@@ -94,16 +101,38 @@ mp1_ioctl:
 # ----------------- Functions private to this file -------------------
 
 update_missiles:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
 		
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		ret
 
 #new functions
 
 redraw_bases:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		ret
 
 redraw_crosshair:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
 
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		ret
 
 mp1_missile_remove:
