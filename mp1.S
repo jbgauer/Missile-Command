@@ -111,7 +111,7 @@ update_missiles:
 		PUSHL %EDI
 		MOVL mp1_missile_list, %ESI 		#Moving head of missile list to ESI
 
-top:
+	top:
 		MOVL 28(%ESI), %EDI 		#storing 'exploded' in EDI
 		CMPL $0, %EDI			#checking if exploded
 		JNE missileExploded 
@@ -131,13 +131,25 @@ top:
 		JG outOfBounds				#jmp if y > 24
 
 		#has missile reached dest?
+		MOVL 4(%ESI), %EDI
+		CMPL 20(%ESI), %EDI		
+		JNE notReachedDest
+		MOVL 8(%ESI), %EDI
+		CMPL 24(%ESI), %EDI
+		JNE notReachedDest
+
+		#missile has reached destination
+	missileExploded:
 		
 
 
-missileExploded:
 
 
-outOfBounds:
+	notReachedDest:
+		#has screen changed?
+
+	
+	outOfBounds:
 		#erase missile
 		#void mp1_missile_remove(head)
 
@@ -154,7 +166,7 @@ outOfBounds:
 
 
 
-nextMissile:
+	nextMissile:
 		#check if %ESI is storing something
 		MOVL 0(%ESI), %ESI		#%ESI = %ESI -> next 
 		CMPL $0, %ESI
