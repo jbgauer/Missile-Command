@@ -146,7 +146,7 @@ update_missiles:
 
 
 	notReachedDest:
-		#has screen changed?
+		#has screen position changed?
 
 	
 	outOfBounds:
