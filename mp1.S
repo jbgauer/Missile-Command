@@ -101,10 +101,64 @@ mp1_ioctl:
 # ----------------- Functions private to this file -------------------
 
 update_missiles:
+
+		#%ESI = head pointer
+		#%EDI = temp store
+		#%EBX = 
+
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
+		MOVL mp1_missile_list, %ESI 		#Moving head of missile list to ESI
+
+top:
+		MOVL 28(%ESI), %EDI 		#storing 'exploded' in EDI
+		CMPL $0, %EDI			#checking if exploded
+		JNE missileExploded 
+
+		#update x,y 
+		ADDL 12(%ESI), 4(%ESI) 		#x = x + vx 
+		MOVL 4(%ESI), %EDI
+		CMPL $0, %EDI
+		JL outOfBounds				#jmp if x < 0
+		CMPL $79, %EDI
+		JG outOfBounds				#jmp if x > 79
+		ADDL 16(%ESI), 8(%ESI)		#y = y + vy 
+		MOVL 8(%ESI), %EDI
+		CMPL $0, %EDI
+		JL outOfBounds				#jmp if y < 0
+		CMPL $24, %EDI
+		JG outOfBounds				#jmp if y > 24
+
+		#has missile reached dest?
 		
+
+
+missileExploded:
+
+
+outOfBounds:
+		#erase missile
+		#void mp1_missile_remove(head)
+
+		PUSHL %EAX 
+		PUSHL %ECX 
+		PUSHL %EDX 
+		PUSHL %ESI 		#pushes argument head pointer
+		CALL mp1_missile_remove			#removes missile
+		POPL %EDX
+		POPL %ECX
+		POPL %EAX
+		JMP nextMissile
+
+
+
+
+nextMissile:
+		#check if %ESI is storing something
+		MOVL 0(%ESI), %ESI		#%ESI = %ESI -> next 
+		CMPL $0, %ESI
+		JNE top				#if there is a next missile go to top
 
 		POPL %EDI
 		POPL %ESI
