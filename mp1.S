@@ -140,14 +140,19 @@ update_missiles:
 
 		#missile has reached destination
 	missileExploded:
-		
-
+		PUSHL %ECX
+		PUSHL %EDX 
+		PUSHL %ESI 				#pushes argument head pointer
+		CALL missile_explode			#removes missile
+		POPL %EDX				#pop argument
+		POPL %EDX
+		POPL %ECX
 
 
 
 	notReachedDest:
 		#has screen position changed?
-
+		
 	
 	outOfBounds:
 		#erase missile
@@ -158,6 +163,7 @@ update_missiles:
 		PUSHL %EDX 
 		PUSHL %ESI 		#pushes argument head pointer
 		CALL mp1_missile_remove			#removes missile
+		POPL %EDX 		#pop argument
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX
