@@ -139,6 +139,7 @@ update_missiles:
 		JNE notReachedDest
 
 		#missile has reached destination
+
 	missileExploded:
 		PUSHL %ECX
 		PUSHL %EDX 
@@ -147,12 +148,29 @@ update_missiles:
 		POPL %EDX				#pop argument
 		POPL %EDX
 		POPL %ECX
-
+		CMPL $0, %EAX			
+		JNE missleDecrement		#if EAX /= 0 then don't call mp1_notify
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		CALL mp1_notify_user 		#notify user-space
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+	missileDecrement:
+		#decrement exploded
+		SUBL $1, 28(%ESI)			#exploded = exploded -1
+		MOVL 28(%ESI), %EDI
+		CMPL $0, %EDI				#if exploded == 0
+		JE outOfBounds
+		#draw to screen with EXPLOSION character
 
 
 	notReachedDest:
 		#has screen position changed?
-		
+		#erase old position
+
+		#re-draw in new postiion
 	
 	outOfBounds:
 		#erase missile
