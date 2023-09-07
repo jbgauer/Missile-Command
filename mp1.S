@@ -114,7 +114,7 @@ update_missiles:
 		PUSHL %ESI 
 		PUSHL %EDI
 		MOVL mp1_missile_list, %ESI 		#Moving head of missile list to ESI
-
+		XORL %EBX, %EBX 				#sets prev to 0
 	top:
 		MOVL EXPLODED(%ESI), %EDI 		#storing 'exploded' in EDI
 		CMPL $0, %EDI			#checking if exploded
@@ -212,7 +212,8 @@ update_missiles:
 
 	nextMissile:
 		#check if %ESI is storing something
-		MOVL NEXT(%ESI), %ESI		#%ESI = %ESI -> next 
+		MOVL %ESI, %EBX				#prev = head
+		MOVL NEXT(%ESI), %ESI		#head = head -> next 
 		CMPL $0, %ESI
 		JNE top				#if there is a next missile go to top
 
@@ -253,7 +254,7 @@ mp1_missile_remove:
 		PUSHL %ESI 
 		PUSHL %EDI
 		#void mp1_missile_remove(head, prev)
-		
+
 
 
 
