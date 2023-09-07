@@ -175,7 +175,7 @@ update_missiles:
 		MOVW X_TOP(%ESI), %EDI		
 		IMULW $160, %EDI	 	#x*80*2
 		MOVW Y_TOP(%ESI), %EDX	
-		IMULW 		
+		IMULW 	
 
 
 		PUSHL %EDX		
