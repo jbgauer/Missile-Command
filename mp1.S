@@ -82,6 +82,7 @@ mp1_rtc_tasklet:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
+		leave
 		ret
 
 # int mp1_ioctl(unsigned long arg, unsigned int cmd)
@@ -95,6 +96,7 @@ mp1_rtc_tasklet:
 
 .globl mp1_ioctl
 mp1_ioctl:
+		leave
 		ret
 
 
@@ -201,6 +203,7 @@ update_missiles:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
+		leave
 		ret
 
 #new functions
@@ -214,6 +217,7 @@ redraw_bases:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
+		leave
 		ret
 
 redraw_crosshair:
@@ -225,27 +229,33 @@ redraw_crosshair:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
+		leave
 		ret
 
 mp1_missile_remove:
-
+		leave
 		ret
 
 #original functions
 
 mp1_ioctl_startgame:
+		leave
 		ret
 
 mp1_ioctl_addmissile:
+		leave
 		ret
 
 mp1_ioctl_movexhairs:
+		leave
 		ret
 
 mp1_ioctl_getstatus:
+		leave
 		ret
 
 mp1_ioctl_endgame:
+		leave
 		ret
 
 
