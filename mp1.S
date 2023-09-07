@@ -163,6 +163,7 @@ update_missiles:
 		POPL %EDX
 		POPL %ECX 
 		POPL %EAX
+		
 	missileDecrement:
 		#decrement exploded
 		SUBL $1, EXPLODED(%ESI)			#exploded = exploded -1
@@ -172,11 +173,13 @@ update_missiles:
 
 		#draw to screen with EXPLOSION Character
 		MOVL EXPLOSION, %CL 	#store explosion char to %CL
-		MOVW X_TOP(%ESI), %EDI		
-		IMULW $160, %EDI	 	#x = x*80*2
-		MOVW Y_TOP(%ESI), %EDX	
+		MOVL X(%ESI), %EDI
+		SHR %EDI, $16			#shifts to get top 16 
+		IMULL $160, %EDI	 	#x = x*80*2
+		MOVL Y(%ESI), %EDX
+		SHR %EDX, $16			#shifts to get top 16	
 		IMULW $2, %EDX			#y = y*2
-		
+
 
 		PUSHL %EDX		
 		CALL mp1_poke		
