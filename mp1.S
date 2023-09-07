@@ -9,7 +9,9 @@
 
 	NEXT 	  = 0
 	X	  = 4
+	X_TOP = 6
 	Y	  = 8
+	Y_TOP = 10
 	VX	  = 12
 	VY	  = 16
 	DEST_X	  = 20
@@ -167,8 +169,18 @@ update_missiles:
 		MOVL EXPLODED(%ESI), %EDI
 		CMPL $0, %EDI				#if exploded == 0
 		JE outOfBounds
-		#draw to screen with EXPLOSION character
 
+		#draw to screen with EXPLOSION Character
+		MOVL EXPLOSION, %CL 	#store explosion char to %CL
+		MOVW X_TOP(%ESI), %EDI		
+		IMULW $160, %EDI	 	#x*80*2
+		MOVW Y_TOP(%ESI), %EDX	
+		IMULW 		
+
+
+		PUSHL %EDX		
+		CALL mp1_poke		
+		POPL %EDX
 
 	notReachedDest:
 		#has screen position changed?
@@ -190,8 +202,6 @@ update_missiles:
 		POPL %ECX
 		POPL %EAX
 		JMP nextMissile
-
-
 
 
 	nextMissile:
