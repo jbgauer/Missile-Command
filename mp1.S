@@ -161,8 +161,8 @@ update_missiles:
 		POPL %EAX
 	missileDecrement:
 		#decrement exploded
-		SUBL $1, 28(%ESI)			#exploded = exploded -1
-		MOVL 28(%ESI), %EDI
+		SUBL $1, EXPLODED(%ESI)			#exploded = exploded -1
+		MOVL EXPLODED(%ESI), %EDI
 		CMPL $0, %EDI				#if exploded == 0
 		JE outOfBounds
 		#draw to screen with EXPLOSION character
