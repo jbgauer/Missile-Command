@@ -112,30 +112,32 @@ update_missiles:
 		MOVL mp1_missile_list, %ESI 		#Moving head of missile list to ESI
 
 	top:
-		MOVL 28(%ESI), %EDI 		#storing 'exploded' in EDI
+		MOVL EXPLODED(%ESI), %EDI 		#storing 'exploded' in EDI
 		CMPL $0, %EDI			#checking if exploded
 		JNE missileExploded 
 
-		#update x,y 
-		ADDL 12(%ESI), 4(%ESI) 		#x = x + vx 
-		MOVL 4(%ESI), %EDI
+		#update x,y
+		MOVL VS(%ESI), %EDI 
+		ADDL %EDI, X(%ESI) 			#x = x + vx 
+		MOVL X(%ESI), %EDI
 		CMPL $0, %EDI
 		JL outOfBounds				#jmp if x < 0
 		CMPL $79, %EDI
 		JG outOfBounds				#jmp if x > 79
-		ADDL 16(%ESI), 8(%ESI)		#y = y + vy 
-		MOVL 8(%ESI), %EDI
+		MOVL VY(%ESI), %EDI
+		ADDL %EDI, Y(%ESI)			#y = y + vy 
+		MOVL Y(%ESI), %EDI
 		CMPL $0, %EDI
 		JL outOfBounds				#jmp if y < 0
 		CMPL $24, %EDI
 		JG outOfBounds				#jmp if y > 24
 
 		#has missile reached dest?
-		MOVL 4(%ESI), %EDI
-		CMPL 20(%ESI), %EDI		
+		MOVL X(%ESI), %EDI
+		CMPL DEST_X(%ESI), %EDI		
 		JNE notReachedDest
-		MOVL 8(%ESI), %EDI
-		CMPL 24(%ESI), %EDI
+		MOVL Y(%ESI), %EDI
+		CMPL DEST_Y(%ESI), %EDI
 		JNE notReachedDest
 
 		#missile has reached destination
@@ -192,7 +194,7 @@ update_missiles:
 
 	nextMissile:
 		#check if %ESI is storing something
-		MOVL 0(%ESI), %ESI		#%ESI = %ESI -> next 
+		MOVL NEXT(%ESI), %ESI		#%ESI = %ESI -> next 
 		CMPL $0, %ESI
 		JNE top				#if there is a next missile go to top
 
