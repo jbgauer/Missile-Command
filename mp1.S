@@ -194,14 +194,16 @@ update_missiles:
 	
 	outOfBounds:
 		#erase missile
-		#void mp1_missile_remove(head)
+		#void mp1_missile_remove(head, prev)
 
 		PUSHL %EAX 
 		PUSHL %ECX 
 		PUSHL %EDX 
+		PUSHL %EBX		#pushes arguemnt prev pointer
 		PUSHL %ESI 		#pushes argument head pointer
 		CALL mp1_missile_remove			#removes missile
 		POPL %EDX 		#pop argument
+		POPL %EDX
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX
@@ -247,6 +249,17 @@ redraw_crosshair:
 		ret
 
 mp1_missile_remove:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+		#void mp1_missile_remove(head, prev)
+		
+
+
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		leave
 		ret
 
