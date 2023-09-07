@@ -108,7 +108,7 @@ update_missiles:
 
 		#%ESI = head pointer
 		#%EDI = temp store
-		#%EBX = 
+		#%EBX = prev pointer
 
 		PUSHL %EBX
 		PUSHL %ESI 
@@ -173,10 +173,10 @@ update_missiles:
 		#draw to screen with EXPLOSION Character
 		MOVL EXPLOSION, %CL 	#store explosion char to %CL
 		MOVW X_TOP(%ESI), %EDI		
-		IMULW $160, %EDI	 	#x*80*2
+		IMULW $160, %EDI	 	#x = x*80*2
 		MOVW Y_TOP(%ESI), %EDX	
-		IMULW 	
-
+		IMULW $2, %EDX			#y = y*2
+		
 
 		PUSHL %EDX		
 		CALL mp1_poke		
