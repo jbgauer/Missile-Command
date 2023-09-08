@@ -454,14 +454,19 @@ mp1_missile_remove:
 		POPL %EAX
 
 		#remove from linked list
-		MOVL 0(%ESI), %EDI
-		MOVL %EDI, 0(%EDI)			#prev->next = curr->next
+		CMP $0, %EBX	
+		JNE notHeadOfList			#jmp if prev is not null
+		MOVL NEXT(%ESI), 
+
+	notHeadOfList:
+		MOVL NEXT(%ESI), %EDI
+		MOVL %EDI, NEXT(%EDI)			#prev->next = curr->next
 		
 		#struct missile freed with mp1_free
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		MOVL 0(%ESI), %EDI
+		MOVL NEXT(%ESI), %EDI
 		PUSHL %EDI			#push curr pointer
 		CALL mp1_free
 		POPL %EDX		#pop args
