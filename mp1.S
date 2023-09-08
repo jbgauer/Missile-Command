@@ -481,7 +481,7 @@ mp1_missile_remove:
 
 	notHeadOfList:
 		MOVL NEXT(%ESI), %EDI
-		MOVL %EDI, NEXT(%EDI)			#prev->next = curr->next
+		MOVL %EDI, NEXT(%EBX)			#prev->next = curr->next
 		
 		
 	freeMissile:
