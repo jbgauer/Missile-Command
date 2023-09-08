@@ -457,10 +457,21 @@ mp1_printToScreen:
 		ret
 
 
+#-------------------------------------------
 
 #original functions
 
 mp1_ioctl_startgame:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+		
+
+
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		leave
 		ret
 
