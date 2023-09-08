@@ -23,6 +23,10 @@
 
 	EXPLOSION = 64
 
+	# Character to draw empty space ' '
+
+	EMPTYCHAR = 32
+
 
 # Data shared between this file and rtc.c helper functions
 
@@ -172,7 +176,6 @@ update_missiles:
 		JE outOfBounds
 
 		#draw to screen with EXPLOSION Character
-		
 		MOVL EXPLOSION, %CL 	#store explosion char to %CL
 		JMP printToScreen
 		
@@ -180,19 +183,20 @@ update_missiles:
 	notReachedDest:
 		#has screen position changed?
 		#erase old position
-
-		MOVL X(%ESI), %EDI
-		SHR %EDI, $16			#shifts to get top 16 
-		IMULL $160, %EDI	 	#x = x*80*2
-		MOVL Y(%ESI), %EDX
-		SHR %EDX, $16			#shifts to get top 16	
-		IMULW $2, %EDX			#y = y*2
-		ADDL %EDX, %EDI			# x*80*2 + y*2
-		MOVL %EDI, %EAX
-		MOVL $32, %CL 			#store 'white space' (32 ascii)
-		PUSHL %EDX		
-		CALL mp1_poke			#draw to screen	
+		#void mp1_printToScreen(X, Y, C)
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL EMPTYCHAR
+		PUSHL Y(%ESI)
+		PUSHL X(%ESI)
+		CALL mp1_printToScreen
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
 		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
 
 		#re-draw in new postiion
 		MOVB C(%ESI), %CL		#stores c in CL
@@ -213,21 +217,6 @@ update_missiles:
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX
-		JMP nextMissile
-
-	printToScreen:
-		MOVL X(%ESI), %EDI
-		SHR %EDI, $16			#shifts to get top 16 
-		IMULL $160, %EDI	 	#x = x*80*2
-		MOVL Y(%ESI), %EDX
-		SHR %EDX, $16			#shifts to get top 16	
-		IMULW $2, %EDX			#y = y*2
-		ADDL %EDX, %EDI			# x*80*2 + y*2
-		MOVL %EDI, %EAX
-		PUSHL %EDX		
-		CALL mp1_poke			#draw to screen	
-		POPL %EDX
-
 
 	nextMissile:
 		#check if %ESI is storing something
@@ -274,7 +263,11 @@ mp1_missile_remove:
 		PUSHL %EDI
 		#void mp1_missile_remove(head, prev)
 
+		#erase from screen
 
+		#remove from linked list
+
+		#struct missile freed with mp1_free
 
 
 		POPL %EDI
@@ -283,7 +276,32 @@ mp1_missile_remove:
 		leave
 		ret
 
+mp1_printToScreen:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+		#void mp1_printToScreen(X, Y, C)
+		#%EDI = X 
+		#%EDX = Y 
+		MOVL 4(%EBP), %EDI		#x was pushed 4 bytes from ebp
+		MOVL 8(%EBP), %EDX		#y pushed 8 from ebp
+		MOVB 12(%EBP), %CL		#store c to CL
 
+		SHR %EDI, $16			#shifts to get top 16 
+		IMULL $160, %EDI	 	#x = x*80*2
+		SHR %EDX, $16			#shifts to get top 16	
+		IMULW $2, %EDX			#y = y*2
+		ADDL %EDX, %EDI			# x*80*2 + y*2
+		MOVL %EDI, %EAX
+		PUSHL %EDX		
+		CALL mp1_poke			#draw to screen	
+		POPL %EDX
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
+		leave
+		ret
 
 #original functions
 
