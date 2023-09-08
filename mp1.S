@@ -155,7 +155,8 @@ update_missiles:
 		#%ESI = head pointer
 		#%EBX = prev pointer
 		#%EDI = temp store
-		
+		#%ECX = old x
+		#%EDX = old y 
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -167,20 +168,19 @@ update_missiles:
 		JNE missileExploded 
 
 		#update x,y
+		MOVL X(%ESI), %ECX 			#storing old x 
+		MOVL Y(%ESI), %EDX			#storing old y 
+
 		MOVL VX(%ESI), %EDI 
 		ADDL %EDI, X(%ESI) 			#x = x + vx 
-		MOVL X(%ESI), %EDI
-		CMPL $0, %EDI
-		JL outOfBounds				#jmp if x < 0
+		MOVL X(%ESI), %EDI	
 		CMPL $79, %EDI
-		JG outOfBounds				#jmp if x > 79
+		JA outOfBounds				#jmp if x < 0 || x > 79
 		MOVL VY(%ESI), %EDI
 		ADDL %EDI, Y(%ESI)			#y = y + vy 
 		MOVL Y(%ESI), %EDI
-		CMPL $0, %EDI
-		JL outOfBounds				#jmp if y < 0
 		CMPL $24, %EDI
-		JG outOfBounds				#jmp if y > 24
+		JA outOfBounds				#jmp if y > 24 || y < 0
 
 		#has missile reached dest?
 		MOVL X(%ESI), %EDI
@@ -215,7 +215,7 @@ update_missiles:
 		SUBL $1, EXPLODED(%ESI)			#exploded = exploded -1
 		MOVL EXPLODED(%ESI), %EDI
 		CMPL $0, %EDI				#if exploded == 0
-		JE outOfBounds
+		JE eraseMissile
 
 		#draw to screen with EXPLOSION Character
 		PUSHL %EAX
@@ -269,6 +269,10 @@ update_missiles:
 		JMP nextMissile
 	
 	outOfBounds:
+		MOVL %ECX, X(%ESI)		#restore old x
+		MOVL %EDX, Y(%ESI) 		#restore old y
+
+	eraseMissile:
 		#erase missile
 		#void mp1_missile_remove(head, prev)
 
