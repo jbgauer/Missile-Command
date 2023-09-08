@@ -472,7 +472,7 @@ mp1_missile_remove:
 		MOVL NEXT(%ESI), %EDI
 		PUSHL %EDI			#push curr pointer
 		CALL mp1_free
-		POPL %EDX		#pop args
+		POPL %EDX			#pop args
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX 
@@ -530,18 +530,58 @@ mp1_ioctl_startgame:
 		ret
 
 mp1_ioctl_addmissile:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+		
+
+
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		leave
 		ret
 
 mp1_ioctl_movexhairs:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+		
+
+
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		leave
 		ret
 
 mp1_ioctl_getstatus:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+		
+
+
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		leave
 		ret
 
 mp1_ioctl_endgame:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+		
+
+
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		leave
 		ret
 
