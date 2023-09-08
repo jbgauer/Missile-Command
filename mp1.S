@@ -262,6 +262,30 @@ redraw_bases:
 		PUSHL %ESI 
 		PUSHL %EDI
 
+		#%ESI = base_index
+		#%EBX = draw_index
+		#%EDI = temp store 
+		XORL %ESI, %ESI		#esi = 0
+
+	topLoop:
+		MOVL %ESI(base_alive), %EDI
+		CMPL $1, %EDI
+		JBE	baseDestroyed		#jmp if base destroyed
+
+		#base is not destroyed
+		XORL %EBX, %EBX 		#draw_index = 0
+		
+
+
+
+
+
+	baseDestroyed:
+
+
+
+
+
 
 		POPL %EDI
 		POPL %ESI
@@ -354,6 +378,8 @@ mp1_printToScreen:
 		POPL %EBX
 		leave
 		ret
+
+
 
 #original functions
 
