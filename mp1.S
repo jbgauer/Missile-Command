@@ -208,8 +208,8 @@ update_missiles:
 		PUSHL %EBX		#pushes arguemnt prev pointer
 		PUSHL %ESI 		#pushes argument head pointer
 		CALL mp1_missile_remove			#removes missile
-		POPL %EDX 		#pop argument
-		POPL %EDX
+		POPL %EDX 		#pop args
+		POPL %EDX		
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX
