@@ -121,7 +121,7 @@ update_missiles:
 		JNE missileExploded 
 
 		#update x,y
-		MOVL VS(%ESI), %EDI 
+		MOVL VX(%ESI), %EDI 
 		ADDL %EDI, X(%ESI) 			#x = x + vx 
 		MOVL X(%ESI), %EDI
 		CMPL $0, %EDI
@@ -195,7 +195,7 @@ update_missiles:
 		POPL %EDX
 
 		#re-draw in new postiion
-		MOVL C(%ESI), %CL		#stores c in CL
+		MOVB C(%ESI), %CL		#stores c in CL
 		JMP printToScreen
 	
 	outOfBounds:
