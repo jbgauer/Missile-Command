@@ -27,6 +27,10 @@
 
 	EMPTYCHAR = 32
 
+	# Shift 16 space
+
+	TOPSHIFT = 16
+
 
 # Data shared between this file and rtc.c helper functions
 
@@ -174,13 +178,13 @@ update_missiles:
 		MOVL VX(%ESI), %EDI 
 		ADDL %EDI, X(%ESI) 			#x = x + vx 
 		MOVL X(%ESI), %EDI
-		SHR %EDI, $16			#shift right 16 to get top 16 bits	
+		SHR %EDI, TOPSHIFT			#shift right 16 to get top 16 bits	
 		CMPL $79, %EDI
 		JA outOfBounds				#jmp if x < 0 || x > 79
 		MOVL VY(%ESI), %EDI
 		ADDL %EDI, Y(%ESI)			#y = y + vy 
 		MOVL Y(%ESI), %EDI
-		SHR %EDI, $16			#shift right 16 to get top 16 bits	
+		SHR %EDI, TOPSHIFT			#shift right 16 to get top 16 bits	
 		CMPL $24, %EDI
 		JA outOfBounds				#jmp if y > 24 || y < 0
 
@@ -224,8 +228,12 @@ update_missiles:
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL EXPLODED			#exploded char
-		PUSHL Y(%ESI)
-		PUSHL X(%ESI)
+		MOVL Y(%ESI), %EDI 
+		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		PUSHL %EDI				#pushes top_y to stack
+		MOVL X(%ESI), %EDI 
+		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		PUSHL %EDI				#pushes top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
 		POPL %EDX		#pop args
@@ -244,8 +252,12 @@ update_missiles:
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL EMPTYCHAR			#empty char
-		PUSHL %EDX			#old y 
-		PUSHL %ECX 			#old x
+		MOVL %EDX, %EDI 
+		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		PUSHL %EDI				#pushes old top_y to stack
+		MOVL %ECX, %EDI 
+		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		PUSHL %EDI				#pushes old top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
 		POPL %EDX		#pop args
@@ -259,8 +271,12 @@ update_missiles:
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL C(%ESI)			#c char
-		PUSHL Y(%ESI)
-		PUSHL X(%ESI)
+		MOVL Y(%ESI), %EDI 
+		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		PUSHL %EDI				#pushes top_y to stack
+		MOVL X(%ESI), %EDI 
+		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		PUSHL %EDI				#pushes top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
 		POPL %EDX		#pop args
@@ -443,8 +459,12 @@ mp1_missile_remove:
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL EMPTYCHAR			#empty char
-		PUSHL Y(%ESI)
-		PUSHL X(%ESI)
+		MOVL Y(%ESI), %EDI 
+		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		PUSHL %EDI				#pushes top_y to stack
+		MOVL X(%ESI), %EDI 
+		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		PUSHL %EDI				#pushes top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
 		POPL %EDX		#pop args
@@ -493,13 +513,12 @@ mp1_printToScreen:
 		MOVL 4(%EBP), %EDI		#x was pushed 4 bytes from ebp
 		MOVL 8(%EBP), %EDX		#y pushed 8 from ebp
 		MOVB 12(%EBP), %CL		#store c to CL
-
-		SHR %EDI, $16			#shifts to get top 16 
+ 
 		IMULL $160, %EDI	 	#x = x*80*2
-		SHR %EDX, $16			#shifts to get top 16	
 		IMULW $2, %EDX			#y = y*2
 		ADDL %EDX, %EDI			# x*80*2 + y*2
 		MOVL %EDI, %EAX
+
 		PUSHL %EDX		
 		CALL mp1_poke			#draw to screen	
 		POPL %EDX
