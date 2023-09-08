@@ -173,19 +173,9 @@ update_missiles:
 
 		#draw to screen with EXPLOSION Character
 		
-		MOVL X(%ESI), %EDI
-		SHR %EDI, $16			#shifts to get top 16 
-		IMULL $160, %EDI	 	#x = x*80*2
-		MOVL Y(%ESI), %EDX
-		SHR %EDX, $16			#shifts to get top 16	
-		IMULW $2, %EDX			#y = y*2
-		ADDL %EDX, %EDI			# x*80*2 + y*2
-		MOVL %EDI, %EAX
 		MOVL EXPLOSION, %CL 	#store explosion char to %CL
-		PUSHL %EDX		
-		CALL mp1_poke			#draw to screen	
-		POPL %EDX
-		JMP nextMissile
+		JMP printToScreen
+		
 
 	notReachedDest:
 		#has screen position changed?
@@ -205,6 +195,8 @@ update_missiles:
 		POPL %EDX
 
 		#re-draw in new postiion
+		MOVL C(%ESI), %CL		#stores c in CL
+		JMP printToScreen
 	
 	outOfBounds:
 		#erase missile
@@ -222,6 +214,19 @@ update_missiles:
 		POPL %ECX
 		POPL %EAX
 		JMP nextMissile
+
+	printToScreen:
+		MOVL X(%ESI), %EDI
+		SHR %EDI, $16			#shifts to get top 16 
+		IMULL $160, %EDI	 	#x = x*80*2
+		MOVL Y(%ESI), %EDX
+		SHR %EDX, $16			#shifts to get top 16	
+		IMULW $2, %EDX			#y = y*2
+		ADDL %EDX, %EDI			# x*80*2 + y*2
+		MOVL %EDI, %EAX
+		PUSHL %EDX		
+		CALL mp1_poke			#draw to screen	
+		POPL %EDX
 
 
 	nextMissile:
