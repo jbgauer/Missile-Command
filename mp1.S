@@ -347,18 +347,34 @@ redraw_bases:
 		ADDL $1, %ESI				#increment base_index
 		CMPL $2, %ESI
 		JBE topLoop					#loop if base_index <= 2
-		
+
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
 		leave
 		ret
 
+
+
 redraw_crosshair:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-
+		#redraw crosshair
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		#push c, y, x
+		PUSHL $43			#43 ascii = '+' (char for crosshair)
+		PUSHL crosshairs_x
+		PUSHL crosshairs_y
+		CALL mp1_printToScreen
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
 
 		POPL %EDI
 		POPL %ESI
