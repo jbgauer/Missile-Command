@@ -242,8 +242,8 @@ update_missiles:
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL EMPTYCHAR			#empty char
-		PUSHL Y(%ESI)
-		PUSHL X(%ESI)
+		PUSHL %EDX			#old y 
+		PUSHL %ECX 			#old x
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
 		POPL %EDX		#pop args
