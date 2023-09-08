@@ -106,6 +106,40 @@ mp1_ioctl:
 		PUSHL %ESI 
 		PUSHL %EDI
 
+		#%ESI = cmd
+		#%EBX = unsinged long arg
+		MOVL 8(%EBP), %ESI			#8 above ebp is cmd
+		MOVL 4(%EBP), %ESI			#4 above ebp is arg
+
+		CMPL $0, %ESI
+		JNE addmissile
+		CALL mp1_ioctl_startgame
+
+	addmissile:
+		CMPL $1, %ESI
+		JNE movexhairs
+		CALL mp1_ioctl_addmissile
+	movexhairs:
+		CMPL $1, %ESI
+		JNE getstatus
+		CALL mp1_ioctl_movexhairs
+
+	getstatus:
+		CMPL $1, %ESI
+		JNE endgame
+		CALL mp1_ioctl_getstatus
+
+	endgame:
+		CMPL $1, %ESI
+		JNE invalid
+		CALL mp1_ioctl_endgame
+		JMP endIoctl
+
+	invalid:
+		#return -1
+		
+	endIoctl:
+
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
@@ -471,7 +505,7 @@ mp1_ioctl_startgame:
 		PUSHL %ESI 
 		PUSHL %EDI
 		
-		
+
 
 
 		POPL %EDI
