@@ -176,8 +176,20 @@ update_missiles:
 		JE outOfBounds
 
 		#draw to screen with EXPLOSION Character
-		MOVL EXPLOSION, %CL 	#store explosion char to %CL
-		JMP printToScreen
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL EXPLODED			#exploded char
+		PUSHL Y(%ESI)
+		PUSHL X(%ESI)
+		CALL mp1_printToScreen
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+		JMP nextMissile
 		
 
 	notReachedDest:
@@ -187,7 +199,7 @@ update_missiles:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL EMPTYCHAR
+		PUSHL EMPTYCHAR			#empty char
 		PUSHL Y(%ESI)
 		PUSHL X(%ESI)
 		CALL mp1_printToScreen
@@ -199,8 +211,20 @@ update_missiles:
 		POPL %EAX
 
 		#re-draw in new postiion
-		MOVB C(%ESI), %CL		#stores c in CL
-		JMP printToScreen
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL C(%ESI)			#c char
+		PUSHL Y(%ESI)
+		PUSHL X(%ESI)
+		CALL mp1_printToScreen
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+		JMP nextMissile
 	
 	outOfBounds:
 		#erase missile
