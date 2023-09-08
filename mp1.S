@@ -102,6 +102,13 @@ mp1_rtc_tasklet:
 
 .globl mp1_ioctl
 mp1_ioctl:
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+
+		POPL %EDI
+		POPL %ESI
+		POPL %EBX
 		leave
 		ret
 
@@ -353,8 +360,6 @@ redraw_bases:
 		POPL %EBX
 		leave
 		ret
-
-
 
 redraw_crosshair:
 		PUSHL %EBX
