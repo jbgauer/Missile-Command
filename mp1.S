@@ -274,6 +274,7 @@ redraw_bases:
 
 		#base is not destroyed
 		XORL %EBX, %EBX 		#draw_index = 0
+	notDestroyedLoop:
 		#print out base
 		PUSHL %EAX
 		PUSHL %ECX
@@ -300,13 +301,17 @@ redraw_bases:
 		POPL %EDX
 		POPL %ECX 
 		POPL %EAX
+		
+		ADDL $1, %EBX
+		CMPL $4, %EBX 
+		JBE notDestroyedLoop			#loop if draw_index <= 4
 		JMP nextIndex
-
 
 
 	baseDestroyed:
 		#base is destroyed
 		XORL %EBX, %EBX 		#draw_index = 0
+	destroyedLoop:
 		#print out base
 		PUSHL %EAX
 		PUSHL %ECX
@@ -334,14 +339,15 @@ redraw_bases:
 		POPL %ECX 
 		POPL %EAX
 
-
-
-
+		ADDL $1, %EBX				#increment draw_index
+		CMPL $4, %EBX 
+		JBE DestroyedLoop			#loop if draw_index <= 4
 
 	nextIndex:
-
-
-
+		ADDL $1, %ESI				#increment base_index
+		CMPL $2, %ESI
+		JBE topLoop					#loop if base_index <= 2
+		
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
