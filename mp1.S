@@ -107,9 +107,9 @@ mp1_ioctl:
 update_missiles:
 
 		#%ESI = head pointer
-		#%EDI = temp store
 		#%EBX = prev pointer
-
+		#%EDI = temp store
+		
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -117,7 +117,7 @@ update_missiles:
 		XORL %EBX, %EBX 				#sets prev to 0
 	top:
 		MOVL EXPLODED(%ESI), %EDI 		#storing 'exploded' in EDI
-		CMPL $0, %EDI			#checking if exploded
+		CMPL $0, %EDI				#checking if exploded
 		JNE missileExploded 
 
 		#update x,y
@@ -185,10 +185,24 @@ update_missiles:
 		PUSHL %EDX		
 		CALL mp1_poke			#draw to screen	
 		POPL %EDX
+		JMP nextMissile
 
 	notReachedDest:
 		#has screen position changed?
 		#erase old position
+
+		MOVL X(%ESI), %EDI
+		SHR %EDI, $16			#shifts to get top 16 
+		IMULL $160, %EDI	 	#x = x*80*2
+		MOVL Y(%ESI), %EDX
+		SHR %EDX, $16			#shifts to get top 16	
+		IMULW $2, %EDX			#y = y*2
+		ADDL %EDX, %EDI			# x*80*2 + y*2
+		MOVL %EDI, %EAX
+		MOVL $32, %CL 			#store 'white space' (32 ascii)
+		PUSHL %EDX		
+		CALL mp1_poke			#draw to screen	
+		POPL %EDX
 
 		#re-draw in new postiion
 	
@@ -263,6 +277,8 @@ mp1_missile_remove:
 		POPL %EBX
 		leave
 		ret
+
+
 
 #original functions
 
