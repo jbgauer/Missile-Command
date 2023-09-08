@@ -282,15 +282,34 @@ redraw_crosshair:
 		ret
 
 mp1_missile_remove:
+		#void mp1_missile_remove(head, prev)
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		#void mp1_missile_remove(head, prev)
+		#ESI = head
+		#EBX = prev
+		MOVL 4(%EBP), %ESI		#head stored 4 above EBP
+		MOVL 8(%EBP), %EBX		#prev stored 8 above EBP
 
 		#erase from screen
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL EMPTYCHAR			#empty char
+		PUSHL Y(%ESI)
+		PUSHL X(%ESI)
+		CALL mp1_printToScreen
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
 
 		#remove from linked list
+		
 
+		
 		#struct missile freed with mp1_free
 
 
