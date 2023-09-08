@@ -279,8 +279,53 @@ redraw_bases:
 		PUSHL %ECX
 		PUSHL %EDX
 		#push c, y , x
+		#c = base_pic[draw_index]
+		MOVL %EBX(base_pic), %EDI
+		PUSHL %EDI
+
+		#x = 18 + (base_index * 20) + draw_index
+		MOVL %ESI, %EDI
+		IMULL $20, %EDI			#base_index * 20
+		ADDL $18, %EDI			#above + 18
+		ADDL %EBX, %EDI			#above + draw_index 
+		PUSHL %EDI
+
+		#y = 24
+		PUSHL $24
+
+		CALL mp1_printToScreen
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+		JMP nextIndex
+
+
+
+	baseDestroyed:
+		#base is destroyed
+		XORL %EBX, %EBX 		#draw_index = 0
+		#print out base
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		#push c, y , x
+		#c = dead_base_pic[draw_index]
+		MOVL %EBX(dead_base_pic), %EDI
+		PUSHL %EDI
+
+		#x = 18 + (base_index * 20) + draw_index
+		MOVL %ESI, %EDI
+		IMULL $20, %EDI			#base_index * 20
+		ADDL $18, %EDI			#above + 18
+		ADDL %EBX, %EDI			#above + draw_index 
+		PUSHL %EDI
 		
-		
+		#y = 24
+		PUSHL $24
+
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
 		POPL %EDX		#pop args
@@ -292,10 +337,8 @@ redraw_bases:
 
 
 
-	baseDestroyed:
 
-
-
+	nextIndex:
 
 
 
