@@ -471,7 +471,7 @@ mp1_ioctl_startgame:
 		PUSHL %ESI 
 		PUSHL %EDI
 		
-
+		
 
 
 		POPL %EDI
