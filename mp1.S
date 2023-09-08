@@ -137,6 +137,7 @@ mp1_ioctl:
 
 	invalid:
 		#return -1
+		MOVL $-1, %EAX
 		
 	endIoctl:
 
