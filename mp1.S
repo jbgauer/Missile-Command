@@ -274,8 +274,20 @@ redraw_bases:
 
 		#base is not destroyed
 		XORL %EBX, %EBX 		#draw_index = 0
+		#print out base
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		#push c, y , x
 		
-
+		
+		CALL mp1_printToScreen
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
 
 
 
