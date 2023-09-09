@@ -88,11 +88,17 @@ mp1_rtc_tasklet:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
 
 		CALL update_missiles
 		CALL redraw_bases
 		CALL redraw_crosshair
 
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
@@ -113,6 +119,7 @@ mp1_ioctl:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
+		
 
 		#%ESI = cmd
 		#%EBX = unsinged long arg
@@ -148,9 +155,7 @@ update_missiles:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		PUSHL %EAX
-		PUSHL %ECX
-		PUSHL %EDX
+		
 
 		MOVL mp1_missile_list, %ESI 		#Moving head of missile list to ESI
 		CMPL $0, %ESI 
@@ -316,9 +321,6 @@ update_missiles:
 		POPL %EAX
 
 	dontNotify:	
-		POPL %EDX
-		POPL %ECX 
-		POPL %EAX
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
