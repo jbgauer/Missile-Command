@@ -350,9 +350,19 @@ redraw_bases:
 		XORL %ESI, %ESI		#esi = 0
 		XORL %ECX, %ECX		#ecx = 0
 	topLoop:
+
+	#------------------- wrong
 		MOVL (base_alive, %ESI), %EDI
 		CMPL $1, %EDI
 		JBE	baseDestroyed		#jmp if base destroyed
+		MOVL %ESI, %EDI
+		ADDL $1, %EDI
+		MOVL (base_alive, %EDI), %EDI
+		CMPL $1 
+
+$------------- wrong
+
+
 
 		#base is not destroyed
 		XORL %EBX, %EBX 		#draw_index = 0
@@ -368,7 +378,7 @@ redraw_bases:
 
 		#x = 18 + (base_index * 20) + draw_index
 		MOVL %ESI, %EDI
-		IMULL $20, %EDI			#base_index * 20
+		IMULL $20, %ECX			#base_counter * 20
 		ADDL $18, %EDI			#above + 18
 		ADDL %EBX, %EDI			#above + draw_index 
 		PUSHL %EDI
@@ -405,7 +415,7 @@ redraw_bases:
 
 		#x = 18 + (base_index * 20) + draw_index
 		MOVL %ESI, %EDI
-		IMULL $20, %EDI			#base_index * 20
+		IMULL $20, %ECX			#base_counter * 20
 		ADDL $18, %EDI			#above + 18
 		ADDL %EBX, %EDI			#above + draw_index 
 		PUSHL %EDI
@@ -426,9 +436,10 @@ redraw_bases:
 		JBE destroyedLoop			#loop if draw_index <= 4
 
 	nextIndex:
-		ADDL $32, %ESI				#increment base_index
-		CMPL $64, %ESI
-		JBE topLoop					#loop if base_index <= 64
+		ADDL $4, %ESI				#increment base_index
+		ADDL $1, %ECX			#basecounter++
+		CMPL $8, %ESI
+		JBE topLoop					#loop if base_index <= 8
 
 		POPL %EDI
 		POPL %ESI
@@ -667,7 +678,7 @@ mp1_ioctl_movexhairs:
 		POPL %EAX
 
 		MOVL $0, %EAX				#return 0
-		
+
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
