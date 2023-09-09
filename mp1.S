@@ -584,10 +584,10 @@ mp1_ioctl_movexhairs:
 		#EDI = temp reg 
 		MOVL 4(%EBP), %EDI
 		MOVL %EDI, %EBX
-		SHR %EBX, $16 			#contains top 16 bit
+		SHRL $16, %EBX			#contains top 16 bit
 		MOVL %EDI, %ESI  
-		SHL %ESI, $16
-		SHR %ESI, $16			#contains bottom 16 bit
+		SHLL $16, %ESI 
+		SHRL $16, %ESI			#contains bottom 16 bit
 		#setting x
 		ADDL %ESI, crosshairs_x 	#increment X
 		CMPL $0, crosshairs_x
