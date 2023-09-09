@@ -148,6 +148,9 @@ update_missiles:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
 		MOVL mp1_missile_list, %ESI 		#Moving head of missile list to ESI
 		
 		XORL %EBX, %EBX 				#sets prev to 0
@@ -311,6 +314,9 @@ update_missiles:
 		POPL %EAX
 
 	dontNotify:	
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
@@ -551,22 +557,6 @@ mp1_ioctl_startgame:
 		MOVL $40, crosshairs_x		#set x
 		MOVL $12, crosshairs_y		#set y
 			
-#----------------
-		PUSHL %EAX
-		PUSHL %ECX
-		PUSHL %EDX
-		PUSHL $43
-		PUSHL $12
-		PUSHL $40
-		CALL mp1_printToScreen
-		POPL %EDX		#pop args
-		POPL %EDX		#pop args
-		POPL %EDX		#pop args
-		POPL %EDX
-		POPL %ECX 
-		POPL %EAX
-
-#------------
 
 		POPL %EDI
 		POPL %ESI
