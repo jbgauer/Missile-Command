@@ -637,8 +637,16 @@ mp1_ioctl_movexhairs:
 		MOVL $79, crosshairs_x			#set x = 79
 
 	setY:
+		ADDL %EBX, crosshairs_y 	#increment X
+		CMPL $0, crosshairs_y
+		JGE yUpper					#if y >= 0 jmp
+		MOVL $0, crosshairs_y			#set y = 0
+		JMP drawCrosshair
 
-
+	yUpper:
+		CMPL $23, crosshairs_x
+		JLE drawCrosshair				#if y <= 23 jmp
+		MOVL $23, crosshairs_x			#set y = 23
 
 	drawCrosshair:
 		#draw crosshair
