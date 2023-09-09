@@ -555,7 +555,7 @@ mp1_ioctl_startgame:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL CROSSHAIRCHAR
+		PUSHL $43
 		PUSHL $12
 		PUSHL $40
 		CALL mp1_printToScreen
