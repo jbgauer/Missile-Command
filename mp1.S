@@ -168,7 +168,7 @@ update_missiles:
 		MOVL VY(%ESI), %EDI
 		ADDL %EDI, Y(%ESI)			#y = y + vy 
 		MOVL Y(%ESI), %EDI
-		SHR TOPSHIFT, %EDI			#shift right 16 to get top 16 bits	
+		SHRL TOPSHIFT, %EDI			#shift right 16 to get top 16 bits	
 		CMPL $24, %EDI
 		JA outOfBounds				#jmp if y > 24 || y < 0
 
@@ -332,7 +332,7 @@ redraw_bases:
 		XORL %ECX, %ECX		#ecx = 0
 	topLoop:
 
-		MOVB (base_alive, %ESI,), %DL
+		MOVB (base_alive, %ESI), %DL
 		CMPB $0, %DL
 		JE	baseDestroyed		#jmp if base not destroyed
 		
