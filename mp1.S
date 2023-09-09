@@ -162,7 +162,7 @@ update_missiles:
 		MOVL VX(%ESI), %EDI 
 		ADDL %EDI, X(%ESI) 			#x = x + vx 
 		MOVL X(%ESI), %EDI
-		SHR TOPSHIFT, %EDI			#shift right 16 to get top 16 bits	
+		SHRL $16, %EDI			#shift right 16 to get top 16 bits	
 		CMPL $79, %EDI
 		JA outOfBounds				#jmp if x < 0 || x > 79
 		MOVL VY(%ESI), %EDI
@@ -204,10 +204,10 @@ update_missiles:
 		PUSHL %EDX
 		PUSHL EXPLODED			#exploded char
 		MOVL Y(%ESI), %EDI 
-		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_y to stack
 		MOVL X(%ESI), %EDI 
-		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
@@ -228,10 +228,10 @@ update_missiles:
 		PUSHL %EDX
 		PUSHL EMPTYCHAR			#empty char
 		MOVL %EDX, %EDI 
-		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes old top_y to stack
 		MOVL %ECX, %EDI 
-		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes old top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
@@ -247,10 +247,10 @@ update_missiles:
 		PUSHL %EDX
 		PUSHL C(%ESI)			#c char
 		MOVL Y(%ESI), %EDI 
-		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_y to stack
 		MOVL X(%ESI), %EDI 
-		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
@@ -460,10 +460,10 @@ mp1_missile_remove:
 		PUSHL %EDX
 		PUSHL EMPTYCHAR			#empty char
 		MOVL Y(%ESI), %EDI 
-		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_y to stack
 		MOVL X(%ESI), %EDI 
-		SHR %EDI, TOPSHIFT			#shifts to get top 16
+		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
