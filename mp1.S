@@ -354,19 +354,8 @@ redraw_bases:
 
 		MOVB (base_alive, %ESI), %DL
 		CMPB $0, %DL
-		JNE	notDestroyed		#jmp if base not destroyed
-		MOVL %ESI, %EDI
-		ADDL $4, %EDI
-		MOVB (base_alive, %EDI), %DL
-		CMPL $0, %DL 			#if not 0 not Destroyed
-		JNE notDestroyed
-		ADDL $4, %EDI
-		MOVB (base_alive, %EDI), %DL
-		CMPL $0, %DL 
-		JNE notDestroyed		#if not 0 not destroyed
-		JMP baseDestroyed		#3 bytes are 0 so destroyed
-
-	notDestroyed:
+		JE	baseDestroyed		#jmp if base not destroyed
+		
 		#base is not destroyed
 		XORL %EBX, %EBX 		#draw_index = 0
 	notDestroyedLoop:
@@ -439,10 +428,10 @@ redraw_bases:
 		JBE destroyedLoop			#loop if draw_index <= 4
 
 	nextIndex:
-		ADDL $32, %ESI				#increment base_index
-		ADDL $1, %ECX			#basecounter++
-		CMPL $64, %ESI
-		JBE topLoop					#loop if base_index <= 64
+		ADDL $4, %ESI				#increment base_index
+		ADDL $1, %ECX				#basecounter++
+		CMPL $12, %ESI
+		JBE topLoop					#loop if base_index <= 12
 
 		POPL %EDI
 		POPL %ESI
