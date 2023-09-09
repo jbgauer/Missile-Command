@@ -558,7 +558,7 @@ mp1_ioctl_startgame:
 		#initialize head ptr
 		MOVL $0, mp1_missile_list		#set head = null
 
-		#draw crosshair
+		#crosshair
 		MOVL $40, crosshairs_x		#set x
 		MOVL $12, crosshairs_y		#set y
 		PUSHL %EAX
@@ -575,8 +575,12 @@ mp1_ioctl_startgame:
 		POPL %ECX 
 		POPL %EAX
 
+		#bases
+		MOVL $0, base_alive				#setting base_alive to 0
+		MOVL $0, 4(base_alive)
+		MOVL $0, 8(base_alive)
+
 		#draw bases
-		
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
