@@ -151,8 +151,8 @@ update_missiles:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		MOVL mp1_missile_list, %ESI 		#Moving head of missile list to ESI
 		
+		MOVL mp1_missile_list, %ESI 		#Moving head of missile list to ESI
 		XORL %EBX, %EBX 				#sets prev to 0
 	top:
 		MOVL EXPLODED(%ESI), %EDI 		#storing 'exploded' in EDI
