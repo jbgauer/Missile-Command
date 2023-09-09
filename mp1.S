@@ -515,7 +515,7 @@ mp1_printToScreen:
 		MOVB 12(%EBP), %CL		#store c to CL
  
 		IMULL $160, %EDI	 	#x = x*80*2
-		IMULW $2, %EDX			#y = y*2
+		IMULL $2, %EDX			#y = y*2
 		ADDL %EDX, %EDI			# x*80*2 + y*2
 		MOVL %EDI, %EAX
 
