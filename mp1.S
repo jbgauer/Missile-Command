@@ -120,6 +120,8 @@ mp1_ioctl:
 		CMPL $4, %ESI 
 		JA invalidCmd				#jmp if invalid
 
+
+
 		jump_table:
 		.long mp1_ioctl_startgame, mp1_ioctl_addmissile, mp1_ioctl_movexhairs, mp1_ioctl_getstatus, mp1_ioctl_endgame
 
