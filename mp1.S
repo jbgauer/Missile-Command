@@ -352,19 +352,23 @@ redraw_bases:
 		XORL %ECX, %ECX		#ecx = 0
 	topLoop:
 
-	#------------------- wrong
 		MOVB (base_alive, %ESI), %DL
-		CMPB $0, %EDI
-		JE	baseDestroyed		#jmp if base destroyed
+		CMPB $0, %DL
+		JNE	notDestroyed		#jmp if base not destroyed
 		MOVL %ESI, %EDI
-		ADDL $1, %EDI
-		MOVL (base_alive, %EDI), %EDI
-		CMPL $1 
+		ADDL $4, %EDI
+		MOVB (base_alive, %EDI), %DL
+		CMPL $0, %DL 			#if not 0 not Destroyed
+		JNE notDestroyed
+		ADDL $4, %EDI
+		MOVB (base_alive, %EDI), %DL
+		CMPL $0, %DL 
+		JNE notDestroyed		#if not 0 not destroyed
+		JMP baseDestroyed		#3 bytes are 0 so destroyed
 
-#------------- wrong
 
 
-
+	notDestroyed:
 		#base is not destroyed
 		XORL %EBX, %EBX 		#draw_index = 0
 	notDestroyedLoop:
