@@ -690,7 +690,8 @@ mp1_ioctl_endgame:
 		PUSHL %ESI 
 		PUSHL %EDI
 		
-
+		#free all memory in linked list
+		
 
 
 		POPL %EDI
