@@ -628,7 +628,7 @@ mp1_ioctl_movexhairs:
 		PUSHL %ECX
 		PUSHL %EDX
 		#c
-		PUSHL CROSSHAIRCHAR
+		PUSHL $43
 		#Y
 		PUSHL crosshairs_y
 		#X
