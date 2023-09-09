@@ -366,8 +366,6 @@ redraw_bases:
 		JNE notDestroyed		#if not 0 not destroyed
 		JMP baseDestroyed		#3 bytes are 0 so destroyed
 
-
-
 	notDestroyed:
 		#base is not destroyed
 		XORL %EBX, %EBX 		#draw_index = 0
@@ -441,10 +439,10 @@ redraw_bases:
 		JBE destroyedLoop			#loop if draw_index <= 4
 
 	nextIndex:
-		ADDL $4, %ESI				#increment base_index
+		ADDL $32, %ESI				#increment base_index
 		ADDL $1, %ECX			#basecounter++
-		CMPL $8, %ESI
-		JBE topLoop					#loop if base_index <= 8
+		CMPL $64, %ESI
+		JBE topLoop					#loop if base_index <= 64
 
 		POPL %EDI
 		POPL %ESI
