@@ -564,9 +564,8 @@ mp1_ioctl_addmissile:
 		#%EDI = temp reg
 
 		MOVL 28(%ESP), %ESI 		#28 above esp is arg
+
 		
-
-
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
