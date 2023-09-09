@@ -476,7 +476,8 @@ mp1_missile_remove:
 		#remove from linked list
 		CMP $0, %EBX	
 		JNE notHeadOfList			#jmp if prev is not null
-		MOVL NEXT(%ESI), mp1_missile_list		#sets new head
+		MOVL NEXT(%ESI), %EDI
+		MOVL %EDI, mp1_missile_list		#sets new head
 		JMP freeMissile
 
 	notHeadOfList:
