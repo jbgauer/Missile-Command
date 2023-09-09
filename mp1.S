@@ -345,7 +345,7 @@ redraw_bases:
 		XORL %ESI, %ESI		#esi = 0
 
 	topLoop:
-		MOVL %ESI(base_alive), %EDI
+		MOVL (base_alive, %ESI), %EDI
 		CMPL $1, %EDI
 		JBE	baseDestroyed		#jmp if base destroyed
 
@@ -358,7 +358,7 @@ redraw_bases:
 		PUSHL %EDX
 		#push c, y , x
 		#c = base_pic[draw_index]
-		MOVL %EBX(base_pic), %EDI
+		MOVL (base_pic, %EBX), %EDI
 		PUSHL %EDI
 
 		#x = 18 + (base_index * 20) + draw_index
@@ -421,9 +421,9 @@ redraw_bases:
 		JBE destroyedLoop			#loop if draw_index <= 4
 
 	nextIndex:
-		ADDL $1, %ESI				#increment base_index
-		CMPL $2, %ESI
-		JBE topLoop					#loop if base_index <= 2
+		ADDL $32, %ESI				#increment base_index
+		CMPL $64, %ESI
+		JBE topLoop					#loop if base_index <= 64
 
 		POPL %EDI
 		POPL %ESI
