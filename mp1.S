@@ -149,6 +149,7 @@ update_missiles:
 		PUSHL %ESI 
 		PUSHL %EDI
 		MOVL mp1_missile_list, %ESI 		#Moving head of missile list to ESI
+		
 		XORL %EBX, %EBX 				#sets prev to 0
 	top:
 		MOVL EXPLODED(%ESI), %EDI 		#storing 'exploded' in EDI
@@ -550,6 +551,22 @@ mp1_ioctl_startgame:
 		MOVL $40, crosshairs_x		#set x
 		MOVL $12, crosshairs_y		#set y
 			
+#----------------
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL CROSSHAIRCHAR
+		PUSHL $12
+		PUSHL $40
+		CALL mp1_printToScreen
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+
+#------------
 
 		POPL %EDI
 		POPL %ESI
