@@ -555,8 +555,12 @@ mp1_ioctl_startgame:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		#initialize head ptr
+		#initialize
 		MOVL $0, mp1_missile_list		#set head = null
+		MOVL $0, mp1_score				#score = 0
+		MOVL $0, base_alive				#setting base_alive to 0
+		MOVL $0, 4(base_alive)
+		MOVL $0, 8(base_alive)
 
 		#crosshair
 		MOVL $40, crosshairs_x		#set x
@@ -575,11 +579,6 @@ mp1_ioctl_startgame:
 		POPL %ECX 
 		POPL %EAX
 
-		#bases
-		MOVL $0, base_alive				#setting base_alive to 0
-		MOVL $0, 4(base_alive)
-		MOVL $0, 8(base_alive)
-
 		#draw bases
 		PUSHL %EAX
 		PUSHL %ECX
@@ -589,8 +588,6 @@ mp1_ioctl_startgame:
 		POPL %ECX 
 		POPL %EAX
 		
-
-
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
@@ -598,9 +595,11 @@ mp1_ioctl_startgame:
 		ret
 
 mp1_ioctl_addmissile:
+		#int mp1_ioctl_addmissile (struct missile* user_missile)
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
+		
 		
 
 
@@ -612,13 +611,50 @@ mp1_ioctl_addmissile:
 		ret
 
 mp1_ioctl_movexhairs:
+		#int mp1_ioctl_movexhairs(unsigned long xhair_delta_packed)
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		
+		#ESI = x change 
+		#EBX = y change
+		#EDI = temp reg 
+		MOVL 4(%EBP), %EDI
+		MOVL %EDI, %EBX
+		SHR %EBX, $16 			#contains top 16 bit
+		MOVL %EDI, %ESI  
+		SHL %ESI, $16
+		SHR %ESI, $16			#contains bottom 16 bit
+		#setting x
+		ADDL %ESI, crosshairs_x 	#increment X
+		CMPL $0, crosshairs_x
+		JGE xUpper
+
+	xUpper:
+		CMPL $79, crosshairs_x
+		JLE setY
+
+
+	setY:
 
 
 
+	drawCrosshair:
+		#draw crosshair
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		#c
+		PUSHL CROSSHAIRCHAR
+		#Y
+		PUSHL crosshairs_y
+		#X
+		PUSHL crosshairs_x
+		CALL mp1_printToScreen
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+
+		MOVL $0, %EAX				#return 0
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
