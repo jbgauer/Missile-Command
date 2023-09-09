@@ -346,15 +346,16 @@ redraw_bases:
 		#%ESI = base_index
 		#%EBX = draw_index
 		#%EDI = temp store
+		#%EDX = temp store
 		#%ECX = base_counter 
 		XORL %ESI, %ESI		#esi = 0
 		XORL %ECX, %ECX		#ecx = 0
 	topLoop:
 
 	#------------------- wrong
-		MOVL (base_alive, %ESI), %EDI
-		CMPL $1, %EDI
-		JBE	baseDestroyed		#jmp if base destroyed
+		MOVB (base_alive, %ESI), %DL
+		CMPB $0, %EDI
+		JE	baseDestroyed		#jmp if base destroyed
 		MOVL %ESI, %EDI
 		ADDL $1, %EDI
 		MOVL (base_alive, %EDI), %EDI
@@ -570,9 +571,9 @@ mp1_ioctl_startgame:
 		#initialize
 		MOVL $0, mp1_missile_list		#set head = null
 		MOVL $0, mp1_score				#score = 0
-		MOVL $0, base_alive				#setting base_alive to 0
-		MOVL $0, 4(base_alive)
-		MOVL $0, 8(base_alive)
+		MOVL $1, base_alive				#setting base_alive to 0
+		MOVL $1, 4(base_alive)
+		MOVL $1, 8(base_alive)
 
 		#crosshair
 		MOVL $40, crosshairs_x		#set x
