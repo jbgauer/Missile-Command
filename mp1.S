@@ -168,7 +168,7 @@ update_missiles:
 		MOVL VY(%ESI), %EDI
 		ADDL %EDI, Y(%ESI)			#y = y + vy 
 		MOVL Y(%ESI), %EDI
-		SHR %EDI, TOPSHIFT			#shift right 16 to get top 16 bits	
+		SHR TOPSHIFT, %EDI			#shift right 16 to get top 16 bits	
 		CMPL $24, %EDI
 		JA outOfBounds				#jmp if y > 24 || y < 0
 
@@ -565,7 +565,7 @@ mp1_ioctl_addmissile:
 
 		MOVL 28(%ESP), %ESI 		#28 above esp is arg
 
-		
+
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
