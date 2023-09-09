@@ -27,6 +27,10 @@
 
 	EMPTYCHAR = 32
 
+	#Character to draw crosshair '+'
+
+	CROSSHAIRCHAR = 43
+
 	# Shift 16 space
 
 	TOPSHIFT = 16
@@ -441,7 +445,7 @@ redraw_crosshair:
 		PUSHL %ECX
 		PUSHL %EDX
 		#push c, y, x
-		PUSHL $43			#43 ascii = '+' (char for crosshair)
+		PUSHL CROSSHAIRCHAR			#crosshair character
 		PUSHL crosshairs_x
 		PUSHL crosshairs_y
 		CALL mp1_printToScreen
@@ -551,15 +555,29 @@ mp1_ioctl_startgame:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		
-		#draw crosshair
+		#initialize head ptr
+		MOVL $0, mp1_missile_list		#set head = null
 
+		#draw crosshair
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		#c
+		CALL redraw_bases
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
 
 		#draw bases
-
-
-		#initialize head ptr
-
+		
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		CALL redraw_bases
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+		
 
 
 		POPL %EDI
