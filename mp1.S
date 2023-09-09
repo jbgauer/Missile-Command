@@ -445,7 +445,7 @@ redraw_crosshair:
 		ret
 
 mp1_missile_remove:
-		#ptr* newPrev mp1_missile_remove(curr, prev)
+		#mp1_missile_remove(curr, prev)
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -477,13 +477,11 @@ mp1_missile_remove:
 		CMP $0, %EBX	
 		JNE notHeadOfList			#jmp if prev is not null
 		MOVL NEXT(%ESI), mp1_missile_list		#sets new head
-		XORL %EAX, %EAX				#return prev as 0
 		JMP freeMissile
 
 	notHeadOfList:
 		MOVL NEXT(%ESI), %EDI
 		MOVL %EDI, NEXT(%EBX)			#prev->next = curr->next
-		MOVL %EBX, %EAX				#return same prev ptr 
 		
 	freeMissile:
 		#struct missile freed with mp1_free
