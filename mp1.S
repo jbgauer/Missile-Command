@@ -517,9 +517,9 @@ mp1_printToScreen:
 		MOVL 8(%EBP), %EDX		#y pushed 8 from ebp
 		MOVB 12(%EBP), %CL		#store c to CL
  
-		IMULL $160, %EDI	 	#x = x*80*2
-		IMULL $2, %EDX			#y = y*2
-		ADDL %EDX, %EDI			# x*80*2 + y*2
+		IMULL $160, %EDX	 	#y = y*80*2
+		IMULL $2, %EDI		#x = x*2
+		ADDL %EDX, %EDI			# y*80*2 + x*2
 		MOVL %EDI, %EAX
 
 		PUSHL %EDX		
