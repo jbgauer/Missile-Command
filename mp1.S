@@ -418,7 +418,7 @@ redraw_bases:
 
 		ADDL $1, %EBX				#increment draw_index
 		CMPL $4, %EBX 
-		JBE DestroyedLoop			#loop if draw_index <= 4
+		JBE destroyedLoop			#loop if draw_index <= 4
 
 	nextIndex:
 		ADDL $1, %ESI				#increment base_index
