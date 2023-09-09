@@ -548,29 +548,7 @@ mp1_ioctl_startgame:
 		#crosshair
 		MOVL $40, crosshairs_x		#set x
 		MOVL $12, crosshairs_y		#set y
-		PUSHL %EAX
-		PUSHL %ECX
-		PUSHL %EDX
-		#c
-		PUSHL CROSSHAIRCHAR
-		#Y
-		PUSHL crosshairs_y
-		#X
-		PUSHL crosshairs_x
-		CALL mp1_printToScreen
-		POPL %EDX
-		POPL %ECX 
-		POPL %EAX
-
-		#draw bases
-		PUSHL %EAX
-		PUSHL %ECX
-		PUSHL %EDX
-		CALL redraw_bases
-		POPL %EDX
-		POPL %ECX 
-		POPL %EAX
-		
+			
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
