@@ -162,7 +162,7 @@ update_missiles:
 		MOVL VX(%ESI), %EDI 
 		ADDL %EDI, X(%ESI) 			#x = x + vx 
 		MOVL X(%ESI), %EDI
-		SHR %EDI, TOPSHIFT			#shift right 16 to get top 16 bits	
+		SHR TOPSHIFT, %EDI			#shift right 16 to get top 16 bits	
 		CMPL $79, %EDI
 		JA outOfBounds				#jmp if x < 0 || x > 79
 		MOVL VY(%ESI), %EDI
