@@ -578,7 +578,19 @@ mp1_ioctl_addmissile:
 
 		MOVL 28(%ESP), %ESI 		#28 above esp is arg
 
+		#dynamic memory allocation
 
+
+		#data copy
+
+
+		
+	addFailed:
+		#free any memory allocated before returning 
+		MOVL $-1, %EAX			#return -1
+
+	addSuccess:
+		MOVL $0, %EAX			#return 0
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
