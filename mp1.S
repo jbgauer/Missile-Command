@@ -546,9 +546,8 @@ mp1_ioctl_startgame:
 		MOVL $0, mp1_score				#score = 0
 		MOVL base_alive, %EDI
 		MOVL $1, %EDI			#setting base_alive to 0
-		MOVL $1, 4(%EDI)
-		MOVL $1, 8(%EDI)
-
+		MOVL $1, 1(%EDI)
+		MOVL $1, 2(%EDI)	
 		#crosshair
 		MOVL $40, crosshairs_x		#set x
 		MOVL $12, crosshairs_y		#set y
