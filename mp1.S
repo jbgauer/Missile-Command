@@ -206,15 +206,6 @@ update_missiles:
 		POPL %EDX				#pop argument
 		POPL %EDX
 		POPL %ECX
-		CMPL $0, %EAX			
-		JNE missleDecrement		#if EAX /= 0 then don't call mp1_notify
-		PUSHL %EAX
-		PUSHL %ECX
-		PUSHL %EDX
-		CALL mp1_notify_user 		#notify user-space
-		POPL %EDX
-		POPL %ECX 
-		POPL %EAX
 
 	missileDecrement:
 		#decrement exploded
@@ -324,6 +315,17 @@ update_missiles:
 		CMPL $0, %ESI				#is curr = 0?
 		JNE top				#if there is a next missile go to top
 
+		CMPL $0, %EAX
+		JNE dontNotify
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		CALL mp1_notify_user 		#notify user-space
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+
+	dontNotify:	
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
