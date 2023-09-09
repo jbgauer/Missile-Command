@@ -120,7 +120,7 @@ mp1_ioctl:
 		CMPL $4, %ESI 
 		JA invalidCmd				#jmp if invalid
 
-		JMP ioctl_jump_table(%ESI)
+		JMP *jump_table(,%ESI,4)
 
 		jump_table:
 		.long mp1_ioctl_startgame, mp1_ioctl_addmissile, mp1_ioctl_movexhairs, mp1_ioctl_getstatus, mp1_ioctl_endgame
@@ -350,7 +350,7 @@ redraw_bases:
 
 		#x = 18 + (base_index * 20) + draw_index
 		MOVL %ESI, %EDI
-		IMULL $20, %ECX			#base_counter * 20
+		IMULL $20, %ESI 		#base_index * 20
 		ADDL $18, %EDI			#above + 18
 		ADDL %EBX, %EDI			#above + draw_index 
 		PUSHL %EDI
@@ -387,7 +387,7 @@ redraw_bases:
 
 		#x = 18 + (base_index * 20) + draw_index
 		MOVL %ESI, %EDI
-		IMULL $20, %ECX			#base_counter * 20
+		IMULL $20, %ESI		#base_index * 20
 		ADDL $18, %EDI			#above + 18
 		ADDL %EBX, %EDI			#above + draw_index 
 		PUSHL %EDI
@@ -408,10 +408,9 @@ redraw_bases:
 		JBE destroyedLoop			#loop if draw_index <= 4
 
 	nextIndex:
-		ADDL $4, %ESI				#increment base_index
-		ADDL $1, %ECX				#basecounter++
-		CMPL $12, %ESI
-		JBE topLoop					#loop if base_index <= 12
+		ADDL $1, %ESI				#increment base_index
+		CMPL $2, %ESI
+		JBE topLoop					#loop if base_index <= 2
 
 		POPL %EDI
 		POPL %ESI
