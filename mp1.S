@@ -360,7 +360,7 @@ redraw_bases:
 		MOVL (base_alive, %EDI), %EDI
 		CMPL $1 
 
-$------------- wrong
+#------------- wrong
 
 
 
