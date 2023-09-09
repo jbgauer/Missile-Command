@@ -594,7 +594,7 @@ mp1_ioctl_movexhairs:
 		#ESI = x change 
 		#EBX = y change
 		#EDI = temp reg 
-		MOVL 4(%EBP), %EDI
+		MOVL 28(%ESP), %EDI
 		MOVL %EDI, %EBX
 		SHRL $16, %EBX			#contains top 16 bit
 		MOVL %EDI, %ESI  
