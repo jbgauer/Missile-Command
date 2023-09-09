@@ -305,12 +305,23 @@ update_missiles:
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX
+		#special increment
+		CMPL 0, %EBX 	#checking if prev = 0
+		JNE notBeginList
+		#beginning of list
+		MOVL mp1_missile_list, %ESI		#set curr = head
+		JMP endCheck
+
+	notBeginList:
+		MOVL NEXT(%EBX), %ESI 		#curr = prev->next
+		JMP endCheck
 
 	nextMissile:
 		#check if %ESI is storing something
-		MOVL %ESI, %EBX				#prev = head
-		MOVL NEXT(%ESI), %ESI		#head = head -> next 
-		CMPL $0, %ESI
+		MOVL %ESI, %EBX				#prev = curr
+		MOVL NEXT(%ESI), %ESI		#head = curr -> next 
+	endCheck:
+		CMPL $0, %ESI				#is curr = 0?
 		JNE top				#if there is a next missile go to top
 
 		POPL %EDI
