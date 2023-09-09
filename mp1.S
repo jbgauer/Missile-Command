@@ -341,9 +341,10 @@ redraw_bases:
 
 		#%ESI = base_index
 		#%EBX = draw_index
-		#%EDI = temp store 
+		#%EDI = temp store
+		#%ECX = base_counter 
 		XORL %ESI, %ESI		#esi = 0
-
+		XORL %ECX, %ECX		#ecx = 0
 	topLoop:
 		MOVL (base_alive, %ESI), %EDI
 		CMPL $1, %EDI
@@ -395,7 +396,7 @@ redraw_bases:
 		PUSHL %EDX
 		#push c, y , x
 		#c = dead_base_pic[draw_index]
-		MOVL %EBX(dead_base_pic), %EDI
+		MOVL (dead_base_pic, %EBX), %EDI
 		PUSHL %EDI
 
 		#x = 18 + (base_index * 20) + draw_index
