@@ -627,12 +627,14 @@ mp1_ioctl_movexhairs:
 		#setting x
 		ADDL %ESI, crosshairs_x 	#increment X
 		CMPL $0, crosshairs_x
-		JGE xUpper
+		JGE xUpper					#if x >= 0 jmp
+		MOVL $0, crosshairs_x			#set x = 0
+		JMP setY
 
 	xUpper:
 		CMPL $79, crosshairs_x
-		JLE setY
-
+		JLE setY						#if x <= 79 jmp
+		MOVL $79, crosshairs_x			#set x = 79
 
 	setY:
 
