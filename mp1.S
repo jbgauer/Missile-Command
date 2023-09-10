@@ -218,7 +218,7 @@ update_missiles:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL EXPLODED			#exploded char
+		PUSHL $64			#exploded char
 		MOVL Y(%ESI), %EDI 
 		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_y to stack
@@ -356,7 +356,7 @@ redraw_bases:
 		
 		#base is not destroyed
 		XORL %EBX, %EBX 		#draw_index = 0
-		
+
 	notDestroyedLoop:
 		#print out base
 		PUSHL %EAX
