@@ -677,6 +677,22 @@ mp1_ioctl_movexhairs:
 		JLE drawCrosshair				#if y <= 23 jmp
 		MOVL $23, %EBX 					#set y = 23
 
+	eraseCrosshair:
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL EMPTYCHAR			#empty char
+		PUSHL crosshairs_y		#y
+		PUSHL crosshairs_x		#x
+		CALL mp1_printToScreen
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+
+
 	drawCrosshair:
 		#draw crosshair
 		PUSHL %EAX
