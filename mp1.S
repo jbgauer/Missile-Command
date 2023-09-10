@@ -646,6 +646,7 @@ mp1_ioctl_movexhairs:
 		#ESI = x change 
 		#EBX = y change
 		#EDI = temp reg 
+		#ECX = temp reg
 		MOVL 8(%EBP), %EDI			#args is 8 above ebp 
 		MOVL %EDI, %EBX
 		SHRL $16, %EBX			#contains top 16 bit
@@ -653,28 +654,28 @@ mp1_ioctl_movexhairs:
 		SHLL $16, %ESI 
 		SHRL $16, %ESI			#contains bottom 16 bit
 		#setting x
-		ADDL %ESI, crosshairs_x 	#increment X
-		CMPL $0, crosshairs_x
+		ADDL crosshairs_x, %ESI
+		CMPL $0, %ESI
 		JGE xUpper					#if x >= 0 jmp
-		MOVL $0, crosshairs_x			#set x = 0
+		MOVL $0, %ESI			#set x = 0
 		JMP setY
 
 	xUpper:
-		CMPL $79, crosshairs_x
+		CMPL $79, %ESI
 		JLE setY						#if x <= 79 jmp
-		MOVL $79, crosshairs_x			#set x = 79
+		MOVL $79, %ESI					#set x = 79
 
 	setY:
-		ADDL %EBX, crosshairs_y 	#increment X
-		CMPL $0, crosshairs_y
+		ADDL crosshairs_y, %EBX 	#increment X
+		CMPL $0, %EBX 
 		JGE yUpper					#if y >= 0 jmp
-		MOVL $0, crosshairs_y			#set y = 0
+		MOVL $0, %EBX 			#set y = 0
 		JMP drawCrosshair
 
 	yUpper:
-		CMPL $23, crosshairs_x
+		CMPL $23, %EBX 
 		JLE drawCrosshair				#if y <= 23 jmp
-		MOVL $23, crosshairs_x			#set y = 23
+		MOVL $23, %EBX 					#set y = 23
 
 	drawCrosshair:
 		#draw crosshair
