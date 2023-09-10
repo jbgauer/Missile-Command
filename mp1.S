@@ -610,7 +610,7 @@ mp1_ioctl_addmissile:
 		POPL %EDX
 		POPL %ECX 
 		CMPL $0, %EAX
-		JNE addSuccess 		#all bytes added successfully 
+		JE addSuccess 		#all bytes added successfully 
 
 		#not added successfully so must free memory
 		PUSHL %EAX
