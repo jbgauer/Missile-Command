@@ -350,7 +350,7 @@ redraw_bases:
 		XORL %ECX, %ECX		#ecx = 0
 	topLoop:
 		MOVL base_alive, %EDI
-		MOVB (%EDI, %ESI,), %DL
+		MOVB (%EDI, %ESI,1), %DL
 		CMPB $0, %DL
 		JE	baseDestroyed		#jmp if base not destroyed
 		
@@ -364,7 +364,7 @@ redraw_bases:
 		#push c, y , x
 		#c = base_pic[draw_index]
 		MOVL base_alive, %EDI
-		MOVL (%EDI, %EBX,), %EDI
+		MOVL (%EDI, %EBX,1), %EDI
 		PUSHL %EDI
 
 		#x = 18 + (base_index * 20) + draw_index
@@ -402,7 +402,7 @@ redraw_bases:
 		#push c, y , x
 		#c = dead_base_pic[draw_index]
 		MOVL dead_base_pic, %EDI
-		MOVL (%EDI, %EBX,), %EDI
+		MOVL (%EDI, %EBX,1), %EDI
 		PUSHL %EDI
 
 		#x = 18 + (base_index * 20) + draw_index
