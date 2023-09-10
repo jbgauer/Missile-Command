@@ -536,9 +536,9 @@ mp1_printToScreen:
 		#void mp1_printToScreen(X, Y, C)
 		#%EDI = X 
 		#%EDX = Y 
-		MOVL 4(%EBP), %EDI		#x was pushed 4 bytes from ebp
-		MOVL 8(%EBP), %EDX		#y pushed 8 from ebp
-		MOVB 12(%EBP), %CL		#store c to CL
+		MOVL 8(%EBP), %EDI		#x was pushed 4 bytes from ebp
+		MOVL 12(%EBP), %EDX		#y pushed 8 from ebp
+		MOVB 16(%EBP), %CL		#store c to CL
  
 		IMULL $160, %EDX	 	#y = y*80*2
 		IMULL $2, %EDI   		#x = x*2
