@@ -741,6 +741,10 @@ mp1_ioctl_getstatus:
 		JBE thrdBase
 		ADDL $131072, %EDX		$value  for a 1 at 18-bit
 
+		MOVL (%ESI), %EDI
+		ADDL %EDX, %EDI
+		MOVL %EDI, (%ESI)		#storing values for bases back into user_status
+		
 
 		POPL %EDI
 		POPL %ESI
