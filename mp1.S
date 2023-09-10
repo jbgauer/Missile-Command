@@ -670,14 +670,15 @@ mp1_ioctl_movexhairs:
 		CMPL $0, %EBX 
 		JGE yUpper					#if y >= 0 jmp
 		MOVL $0, %EBX 			#set y = 0
-		JMP drawCrosshair
+		JMP eraseCrosshair
 
 	yUpper:
 		CMPL $23, %EBX 
-		JLE drawCrosshair				#if y <= 23 jmp
+		JLE eraseCrosshair				#if y <= 23 jmp
 		MOVL $23, %EBX 					#set y = 23
 
 	eraseCrosshair:
+		#erase crosshair
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
@@ -692,14 +693,15 @@ mp1_ioctl_movexhairs:
 		POPL %ECX 
 		POPL %EAX
 
+		MOVL %ESI, crosshairs_x
+		MOVL %EBX, crosshairs_y
 
-	drawCrosshair:
 		#draw crosshair
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
 		#c
-		PUSHL $43
+		PUSHL $43			#'+' char
 		#Y
 		PUSHL crosshairs_y
 		#X
