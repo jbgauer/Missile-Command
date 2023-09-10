@@ -592,14 +592,33 @@ mp1_ioctl_addmissile:
 		PUSHL %EDI
 		#%ESI = arg
 		#%EDI = temp reg
-
+		MOVL 8(%EBP), %ESI 		#8 above ebp is arg
 
 		#dynamic memory allocation
-
-
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL $36			#size of struct missile is 36 bytes
+		CALL mp1_malloc
+		POPL %EDX
+		POPL %ECX 
+		CMPL $0, %EAX 		#check to see if failed 
+		JE addFailed
+		
 		#data copy
-
-
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL $36			#size of struct missile is 36 bytes
+		PUSHL %ESI			#from
+		PUSHL %EAX			#to
+		CALL mp1_copy_from_user
+		POPL %EDX			#pop args
+		POPL %EDX			#pop args
+		POPL %EDX			#pop args
+		POPL %EDX
+		POPL %ECX 
+		CMPL $0, %EAX
+		JNE addSuccess 		#all bytes added successfully 
+		
 		
 	addFailed:
 		#free any memory allocated before returning 
