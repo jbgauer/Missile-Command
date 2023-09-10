@@ -735,11 +735,31 @@ mp1_ioctl_endgame:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		
+		#%ESI = curr ptr
+		#%EBX = next ptr
 		#free all memory in linked list
-		
+		MOVL mp1_missile_list, %ESI				#curr = head
+	endTopLoop:
+		CMPL $0, %ESI
+		JE  endDone
+		MOVL NEXT(%ESI), %EBX			#next = curr->next
+		#free memory
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL %ESI			#push memory address
+		CALL mp1_free
+		POPL %EDX			#pop args
+		POPL %EDX
+		POPL %ECX
+		POPL %EAX
+
+		MOVL %EBX, %ESI		#curr = next
+		JMP endTopLoop
 
 
+	endDone:
+		MOVL $0, mp1_missile_list			#sets link list to null
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
