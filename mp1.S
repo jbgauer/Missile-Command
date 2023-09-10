@@ -127,7 +127,7 @@ mp1_ioctl:
 
 		#%ESI = cmd
 		#%EBX = unsinged long arg
-		MOVL 20(%ESP), %ESI			#20 above esp is cmd
+		MOVL 12(%EBP), %ESI			#12 above EBP
 		CMPL $4, %ESI 
 		JA invalidCmd				#jmp if invalid
 
@@ -614,8 +614,6 @@ mp1_ioctl_addmissile:
 		ret
 
 mp1_ioctl_movexhairs:
-		PUSHL %EBP				#callee setup
-		MOVL %ESP, %EBP
 		#int mp1_ioctl_movexhairs(unsigned long xhair_delta_packed)
 		PUSHL %EBX
 		PUSHL %ESI 
@@ -624,9 +622,7 @@ mp1_ioctl_movexhairs:
 		#ESI = x change 
 		#EBX = y change
 		#EDI = temp reg 
-		#---------
-		MOVL 28(%ESP), %EDI
-		#----------
+		MOVL 8(%EBP), %EDI			#args is 8 above ebp 
 		MOVL %EDI, %EBX
 		SHRL $16, %EBX			#contains top 16 bit
 		MOVL %EDI, %ESI  
@@ -677,12 +673,11 @@ mp1_ioctl_movexhairs:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
-		leave
+
 		ret
 
 mp1_ioctl_getstatus:
-		PUSHL %EBP				#callee setup
-		MOVL %ESP, %EBP
+		
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -693,12 +688,11 @@ mp1_ioctl_getstatus:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
-		leave
+		
 		ret
 
 mp1_ioctl_endgame:
-		PUSHL %EBP				#callee setup
-		MOVL %ESP, %EBP
+	
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -710,7 +704,7 @@ mp1_ioctl_endgame:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
-		leave
+	
 		ret
 
 
