@@ -449,7 +449,7 @@ redraw_crosshair:
 		PUSHL %ECX
 		PUSHL %EDX
 		#push c, y, x
-		PUSHL CROSSHAIRCHAR			#crosshair character
+		PUSHL $43			#crosshair character
 		PUSHL crosshairs_x
 		PUSHL crosshairs_y
 		CALL mp1_printToScreen
