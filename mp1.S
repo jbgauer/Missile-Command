@@ -627,13 +627,17 @@ mp1_ioctl_addmissile:
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX 
-		
 	addFailed:
 		#free any memory allocated before returning 
 		MOVL $-1, %EAX			#return -1
-
+		JMP addEnd
 	addSuccess:
 		MOVL $0, %EAX			#return 0
+		MOVL NEXT(%ESI), mp1_missile_list			#new -> next = head
+		MOVL mp1_missile 							#head = new
+
+
+	addEnd:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
