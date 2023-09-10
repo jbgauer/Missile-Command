@@ -723,7 +723,6 @@ mp1_ioctl_getstatus:
 		#low-16 current score
 		MOVW mp1_score, %SI #moves mp1_score to low 16 of esi
 		
-
 		#16,17,18 are current cities 0 is destroyed, 1 is alive
 		MOVL base_alive, %EDI
 		MOVB 0(%EDI), %BL 
