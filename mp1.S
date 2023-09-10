@@ -729,7 +729,7 @@ mp1_ioctl_getstatus:
 		MOVB 0(%EDI), %BL 
 		CMP $0, %BL
 		JBE sndBase
-		ADDL $32768, $EDX		#value for a 1 at 16-bit
+		ADDL $32768, %EDX		#value for a 1 at 16-bit
 	sndBase:
 		MOVB 1(%EDI), %BL
 		CMP $0, %BL
