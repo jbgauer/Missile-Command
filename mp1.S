@@ -85,6 +85,8 @@ mp1_poke:
 
 .globl mp1_rtc_tasklet
 mp1_rtc_tasklet:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -116,6 +118,8 @@ mp1_rtc_tasklet:
 
 .globl mp1_ioctl
 mp1_ioctl:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -146,7 +150,8 @@ mp1_ioctl:
 # ----------------- Functions private to this file -------------------
 
 update_missiles:
-
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		#%ESI = head pointer
 		#%EBX = prev pointer
 		#%EDI = temp store
@@ -330,6 +335,8 @@ update_missiles:
 #new functions
 
 redraw_bases:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -432,6 +439,8 @@ redraw_bases:
 		ret
 
 redraw_crosshair:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -458,6 +467,8 @@ redraw_crosshair:
 		ret
 
 mp1_missile_remove:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		#mp1_missile_remove(curr, prev)
 		PUSHL %EBX
 		PUSHL %ESI 
@@ -517,6 +528,8 @@ mp1_missile_remove:
 		ret
 
 mp1_printToScreen:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -548,6 +561,8 @@ mp1_printToScreen:
 #original functions
 
 mp1_ioctl_startgame:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -569,6 +584,8 @@ mp1_ioctl_startgame:
 		ret
 
 mp1_ioctl_addmissile:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		#int mp1_ioctl_addmissile (struct missile* user_missile)
 		PUSHL %EBX
 		PUSHL %ESI 
@@ -598,6 +615,8 @@ mp1_ioctl_addmissile:
 		ret
 
 mp1_ioctl_movexhairs:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		#int mp1_ioctl_movexhairs(unsigned long xhair_delta_packed)
 		PUSHL %EBX
 		PUSHL %ESI 
@@ -661,6 +680,8 @@ mp1_ioctl_movexhairs:
 		ret
 
 mp1_ioctl_getstatus:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -675,6 +696,8 @@ mp1_ioctl_getstatus:
 		ret
 
 mp1_ioctl_endgame:
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
