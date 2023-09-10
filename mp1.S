@@ -363,7 +363,7 @@ redraw_bases:
 		PUSHL %EDX
 		#push c, y , x
 		#c = base_pic[draw_index]
-		MOVL base_alive, %EDI
+		MOVL $base_alive, %EDI
 		MOVL (%EDI, %EBX,1), %EDI
 		PUSHL %EDI
 
@@ -401,7 +401,7 @@ redraw_bases:
 		PUSHL %EDX
 		#push c, y , x
 		#c = dead_base_pic[draw_index]
-		MOVL dead_base_pic, %EDI
+		MOVL $dead_base_pic, %EDI
 		MOVL (%EDI, %EBX,1), %EDI
 		PUSHL %EDI
 
