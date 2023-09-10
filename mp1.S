@@ -567,7 +567,7 @@ mp1_ioctl_startgame:
 		MOVL $0, mp1_missile_list		#set head = null
 		MOVL $0, mp1_score				#score = 0
 
-		MOVL $16843008, base_alive		#setting bases alive = 00000001000000010000000100000000
+		MOVL $65793, base_alive		#setting bases alive = 00000000000000010000000100000001
 		#crosshair
 		MOVL $40, crosshairs_x		#set x
 		MOVL $12, crosshairs_y		#set y
