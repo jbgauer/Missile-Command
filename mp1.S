@@ -450,8 +450,8 @@ redraw_crosshair:
 		PUSHL %EDX
 		#push c, y, x
 		PUSHL $43			#crosshair character
-		PUSHL crosshairs_x
 		PUSHL crosshairs_y
+		PUSHL crosshairs_x
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
 		POPL %EDX		#pop args
