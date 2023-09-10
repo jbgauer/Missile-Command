@@ -562,9 +562,6 @@ mp1_printToScreen:
 
 mp1_ioctl_startgame:
 		
-		PUSHL %EBX
-		PUSHL %ESI 
-		PUSHL %EDI
 		#%EDI = temp reg
 		#initialize
 		MOVL $0, mp1_missile_list		#set head = null
@@ -579,14 +576,12 @@ mp1_ioctl_startgame:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
-	
+		leave
 		ret
 
 mp1_ioctl_addmissile:
 		#int mp1_ioctl_addmissile (struct missile* user_missile)
-		PUSHL %EBX
-		PUSHL %ESI 
-		PUSHL %EDI
+		
 		#%ESI = arg
 		#%EDI = temp reg
 		MOVL 8(%EBP), %ESI 		#8 above ebp is arg
@@ -642,14 +637,12 @@ mp1_ioctl_addmissile:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
+		leave
 		ret
 
 mp1_ioctl_movexhairs:
 		#int mp1_ioctl_movexhairs(unsigned long xhair_delta_packed)
-		PUSHL %EBX
-		PUSHL %ESI 
-		PUSHL %EDI
-
+		
 		#ESI = x change 
 		#EBX = y change
 		#EDI = temp reg 
@@ -704,14 +697,12 @@ mp1_ioctl_movexhairs:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
-
+		leave
 		ret
 
 mp1_ioctl_getstatus:
 		#int mp1 ioctl getstatus (unsigned long* user status)
-		PUSHL %EBX
-		PUSHL %ESI 
-		PUSHL %EDI
+		
 		#%ESI = hold main status
 		#%EDI = temp reg
 		#%EBX = temp reg
@@ -766,14 +757,11 @@ mp1_ioctl_getstatus:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
-		
+		leave
 		ret
 
 mp1_ioctl_endgame:
 	
-		PUSHL %EBX
-		PUSHL %ESI 
-		PUSHL %EDI
 		#%ESI = curr ptr
 		#%EBX = next ptr
 		#free all memory in linked list
@@ -802,7 +790,7 @@ mp1_ioctl_endgame:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
-	
+		leave
 		ret
 
 
