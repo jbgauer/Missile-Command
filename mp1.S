@@ -161,9 +161,8 @@ update_missiles:
 		PUSHL %ESI 
 		PUSHL %EDI
 		
-
 		MOVL $mp1_missile_list, %ESI 		#Moving head of missile list to ESI
-		CMPL $0, %ESI 
+		CMPL $0, (%ESI) 
 		JE dontNotify					#if head = null end
 		XORL %EBX, %EBX 				#sets prev to 0
 	top:
