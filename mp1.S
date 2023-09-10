@@ -711,12 +711,14 @@ mp1_ioctl_getstatus:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		#%ESI = user_status
+		#%ESI = hold main status
 		#%EDI = temp reg
 		#%EBX = temp reg
 		#%EDX = hold status of bases
+		#%ECX = user_status
 		XORL %EDX, %EDX			#set edx = 0
-		MOVL 8(%EBP), %ESI 		#arg is 8 above ebp
+		XORL %ESI, %ESI
+		MOVL 8(%EBP), %ECX 		#arg is 8 above ebp
 
 		#low-16 current score
 		MOVW mp1_score, (%SI) #moves mp1_score to low 16 of esi
@@ -744,7 +746,12 @@ mp1_ioctl_getstatus:
 		MOVL (%ESI), %EDI
 		ADDL %EDX, %EDI
 		MOVL %EDI, (%ESI)		#storing values for bases back into user_status
+
 		
+
+
+
+
 
 		POPL %EDI
 		POPL %ESI
