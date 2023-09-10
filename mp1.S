@@ -649,10 +649,10 @@ mp1_ioctl_movexhairs:
 		#ECX = temp reg
 		MOVL 8(%EBP), %EDI			#args is 8 above ebp 
 		MOVL %EDI, %EBX
-		SHRL $16, %EBX			#contains top 16 bit
+		SARL $16, %EBX			#contains top 16 bit
 		MOVL %EDI, %ESI  
 		SHLL $16, %ESI 
-		SHRL $16, %ESI			#contains bottom 16 bit
+		SARL $16, %ESI			#contains bottom 16 bit
 		#setting x
 		ADDL (crosshairs_x), %ESI
 		CMPL $0, %ESI
@@ -666,7 +666,7 @@ mp1_ioctl_movexhairs:
 		MOVL $79, %ESI					#set x = 79
 
 	setY:
-		ADDL (crosshairs_y), %EBX 	#increment X
+		ADDL (crosshairs_y), %EBX 	
 		CMPL $0, %EBX 
 		JGE yUpper					#if y >= 0 jmp
 		MOVL $0, %EBX 			#set y = 0
