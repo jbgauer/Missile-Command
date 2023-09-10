@@ -712,7 +712,9 @@ mp1_ioctl_getstatus:
 		PUSHL %ESI 
 		PUSHL %EDI
 		#%ESI = user_status
-
+		#%EDI = temp reg
+		#%EBX = temp reg
+		#%EDX = hold status of bases
 		MOVL 8(%EBP), %ESI 		#arg is 8 above ebp
 
 		#low-16 current score
@@ -721,7 +723,21 @@ mp1_ioctl_getstatus:
 
 		#16,17,18 are current cities 0 is destroyed, 1 is alive
 		MOVL base_alive, %EDI
-		
+		MOVB 0(%EDI), %BL 
+		CMP $0, %BL
+		JBE sndBase
+
+	sndBase:
+		MOVB 1(%EDI), %BL
+		CMP $0, %BL
+		JBE thrdBase
+
+
+	thrdBase:
+		MOVB 2(%EDI), %BL
+		CMP $0, %BL
+		JBE thrdBase
+
 
 
 		POPL %EDI
