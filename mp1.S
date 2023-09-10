@@ -561,8 +561,7 @@ mp1_printToScreen:
 #original functions
 
 mp1_ioctl_startgame:
-		PUSHL %EBP				#callee setup
-		MOVL %ESP, %EBP
+		
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -580,12 +579,10 @@ mp1_ioctl_startgame:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
-		leave
+	
 		ret
 
 mp1_ioctl_addmissile:
-		PUSHL %EBP				#callee setup
-		MOVL %ESP, %EBP
 		#int mp1_ioctl_addmissile (struct missile* user_missile)
 		PUSHL %EBX
 		PUSHL %ESI 
@@ -601,6 +598,7 @@ mp1_ioctl_addmissile:
 		CALL mp1_malloc
 		POPL %EDX
 		POPL %ECX 
+		MOVL %EAX, %EDI
 		CMPL $0, %EAX 		#check to see if failed 
 		JE addFailed
 		
@@ -618,7 +616,17 @@ mp1_ioctl_addmissile:
 		POPL %ECX 
 		CMPL $0, %EAX
 		JNE addSuccess 		#all bytes added successfully 
-		
+
+		#not added successfully so must free memory
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL %EDI			#push memory address
+		CALL mp1_free
+		POPL %EDX			#pop args
+		POPL %EDX
+		POPL %ECX
+		POPL %EAX 
 		
 	addFailed:
 		#free any memory allocated before returning 
@@ -629,7 +637,6 @@ mp1_ioctl_addmissile:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
-		leave
 		ret
 
 mp1_ioctl_movexhairs:
