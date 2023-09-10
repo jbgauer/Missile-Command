@@ -654,7 +654,7 @@ mp1_ioctl_movexhairs:
 		SHLL $16, %ESI 
 		SHRL $16, %ESI			#contains bottom 16 bit
 		#setting x
-		ADDL crosshairs_x, %ESI
+		ADDL (crosshairs_x), %ESI
 		CMPL $0, %ESI
 		JGE xUpper					#if x >= 0 jmp
 		MOVL $0, %ESI			#set x = 0
@@ -666,7 +666,7 @@ mp1_ioctl_movexhairs:
 		MOVL $79, %ESI					#set x = 79
 
 	setY:
-		ADDL crosshairs_y, %EBX 	#increment X
+		ADDL (crosshairs_y), %EBX 	#increment X
 		CMPL $0, %EBX 
 		JGE yUpper					#if y >= 0 jmp
 		MOVL $0, %EBX 			#set y = 0
