@@ -372,7 +372,7 @@ redraw_bases:
 
 		#x = 18 + (base_index * 20) + draw_index
 		MOVL %ESI, %EDI
-		IMULL $20, %ESI 		#base_index * 20
+		IMULL $20, %EDI 		#base_index * 20
 		ADDL $18, %EDI			#above + 18
 		ADDL %EBX, %EDI			#above + draw_index 
 		PUSHL %EDI
@@ -407,7 +407,7 @@ redraw_bases:
 
 		#x = 18 + (base_index * 20) + draw_index
 		MOVL %ESI, %EDI
-		IMULL $20, %ESI		#base_index * 20
+		IMULL $20, %EDI		#base_index * 20
 		ADDL $18, %EDI			#above + 18
 		ADDL %EBX, %EDI			#above + draw_index 
 		PUSHL %EDI
