@@ -571,7 +571,7 @@ mp1_ioctl_startgame:
 		MOVL $0, mp1_missile_list		#set head = null
 		MOVL $0, mp1_score				#score = 0
 		MOVL base_alive, %EDI
-		MOVL $16843008, base_alive		#setting bases alive
+		MOVL $16843008, base_alive		#setting bases alive = 00000001000000010000000100000000
 		#crosshair
 		MOVL $40, crosshairs_x		#set x
 		MOVL $12, crosshairs_y		#set y
@@ -593,7 +593,6 @@ mp1_ioctl_addmissile:
 		#%ESI = arg
 		#%EDI = temp reg
 
-		MOVL 28(%ESP), %ESI 		#28 above esp is arg
 
 		#dynamic memory allocation
 
@@ -625,7 +624,9 @@ mp1_ioctl_movexhairs:
 		#ESI = x change 
 		#EBX = y change
 		#EDI = temp reg 
+		#---------
 		MOVL 28(%ESP), %EDI
+		#----------
 		MOVL %EDI, %EBX
 		SHRL $16, %EBX			#contains top 16 bit
 		MOVL %EDI, %ESI  
