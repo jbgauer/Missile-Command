@@ -745,13 +745,20 @@ mp1_ioctl_getstatus:
 
 		ADDL %EDX, %ESI
 		
-
-		#n = 4
-
-		#from %ESI
-
-		#to %ECX
-
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL $4				#n = 4
+		PUSHL %ESI				#from %ESI
+		PUSHL %ECX				#to %ECX
+		CALL mp1_copy_to_user
+		POPL %EDX 				#pop args
+		POPL %EDX 				#pop args
+		POPL %EDX 				#pop args
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+		
 
 
 
