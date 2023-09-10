@@ -350,7 +350,7 @@ redraw_bases:
 		XORL %ECX, %ECX		#ecx = 0
 	topLoop:
 		MOVL base_alive, %EDI
-		MOVB (%EDI, %ESI), %DL
+		MOVB (%EDI, %ESI,), %DL
 		CMPB $0, %DL
 		JE	baseDestroyed		#jmp if base not destroyed
 		
