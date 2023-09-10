@@ -356,6 +356,7 @@ redraw_bases:
 		
 		#base is not destroyed
 		XORL %EBX, %EBX 		#draw_index = 0
+		
 	notDestroyedLoop:
 		#print out base
 		PUSHL %EAX
