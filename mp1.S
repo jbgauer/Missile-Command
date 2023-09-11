@@ -203,7 +203,7 @@ update_missiles:
 		CMPL $0, %EDI				#if exploded == 0
 		JE eraseMissile
 		
-		#-----------
+		
 		#erase old position
 		#void mp1_printToScreen(X, Y, C)
 		PUSHL %EAX
@@ -223,7 +223,7 @@ update_missiles:
 		POPL %EDX
 		POPL %ECX 
 		POPL %EAX
-		#-----------------
+		
 		
 		#draw to screen with EXPLOSION Character
 		PUSHL %EAX
