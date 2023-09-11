@@ -768,7 +768,7 @@ mp1_ioctl_movexhairs:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL $32			#empty char
+		PUSHL $EMPTYCHAR			#empty char
 		PUSHL crosshairs_y		#y
 		PUSHL crosshairs_x		#x
 		CALL mp1_printToScreen
