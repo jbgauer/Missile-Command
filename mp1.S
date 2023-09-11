@@ -611,8 +611,8 @@ mp1_printToScreen:
 
 #int mp1_ioctl_startgame(unsigned long ignore)
 #function initializes all variables, sets crosshair, and sets all bases alive.
-#input : none
-#output: ignore
+#input : ignore
+#output: none
 #registers:
 #%EDI = temp reg
 mp1_ioctl_startgame:
@@ -719,6 +719,11 @@ mp1_ioctl_addmissile:
 #this function moves the crosshair, making sure it doesnt go out of bounds 
 #input: unsigned long which top 16 stores y, and bottom 16 stores x.
 #output: always return 0
+#registers:
+#ESI = x change 
+#EBX = y change
+#EDI = temp reg 
+#ECX = temp reg
 mp1_ioctl_movexhairs:
 		#int mp1_ioctl_movexhairs(unsigned long xhair_delta_packed)
 		PUSHL %EBP				#callee setup
@@ -727,10 +732,7 @@ mp1_ioctl_movexhairs:
 		PUSHL %ESI 
 		PUSHL %EDI
 	
-		#ESI = x change 
-		#EBX = y change
-		#EDI = temp reg 
-		#ECX = temp reg
+		
 		MOVL 8(%EBP), %EDI			#args is 8 above ebp 
 		MOVL %EDI, %EBX
 		SARL $16, %EBX			#contains top 16 bit
@@ -809,6 +811,12 @@ mp1_ioctl_movexhairs:
 #input: unsigned long* user_status which points to a memory address needed to 
 #copy to. 
 #output: 0 if successful, -1 if failed. 
+#registers:
+#%ESI = hold main status
+#%EDI = temp reg
+#%EBX = temp reg
+#%EDX = hold status of bases
+#%ECX = user_status
 mp1_ioctl_getstatus:
 	
 		#int mp1 ioctl getstatus (unsigned long* user status)
@@ -818,11 +826,7 @@ mp1_ioctl_getstatus:
 		PUSHL %ESI 
 		PUSHL %EDI
 	
-		#%ESI = hold main status
-		#%EDI = temp reg
-		#%EBX = temp reg
-		#%EDX = hold status of bases
-		#%ECX = user_status
+		
 		XORL %EDX, %EDX			#set edx = 0
 		XORL %ESI, %ESI
 		MOVL 8(%EBP), %ECX 		#arg is 8 above ebp
@@ -894,7 +898,12 @@ mp1_ioctl_getstatus:
 		ret
 
 #int mp1_ioctl_endgame(unsigned long ignore)
-#
+#this function clears the memory used by linked list and cleanup
+#input: ignore
+#output: 0 for success
+#registers:
+#%ESI = curr ptr
+#%EBX = next ptr
 mp1_ioctl_endgame:
 		PUSHL %EBP				#callee setup
 		MOVL %ESP, %EBP
