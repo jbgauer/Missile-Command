@@ -802,7 +802,7 @@ mp1_ioctl_getstatus:
 		POPL %EDX
 		POPL %ECX 
 		MOVL %EAX, %EDI
-		MOVL %ESI, %EDI		#
+		MOVL %ESI, (%EDI)		#
 
 		PUSHL %EAX
 		PUSHL %ECX
