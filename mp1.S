@@ -637,7 +637,7 @@ mp1_ioctl_startgame:
 		#initialize
 		MOVL $0, mp1_missile_list		#set head = null
 		MOVW $0, mp1_score				#score = 0
-
+		MOVL $1, gameDone			#set game to runningg
 		MOVL $65793, base_alive		#setting bases alive = 00000000000000010000000100000001
 		#crosshair
 		MOVL $40, crosshairs_x		#set x
@@ -933,11 +933,12 @@ mp1_ioctl_endgame:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-	
+
 		#%ESI = curr ptr
 		#%EBX = next ptr
 		#free all memory in linked list
 		MOVL mp1_missile_list, %ESI				#curr = head
+		MOVL $0, gameDone
 	endTopLoop:
 		CMPL $0, %ESI
 		JE  endDone
