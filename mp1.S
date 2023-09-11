@@ -783,7 +783,7 @@ mp1_ioctl_movexhairs:
 		MOVL %EBX, crosshairs_y	   #set y
 
 		#draw crosshair
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		#c
