@@ -179,9 +179,11 @@ update_missiles:
 
 		#has missile reached dest?
 		MOVL X(%ESI), %EDI
+		SARL $16, %EDI			#shift right 16 to get top 16 bits	
 		CMPL DEST_X(%ESI), %EDI		
 		JNE notReachedDest
 		MOVL Y(%ESI), %EDI
+		SARL $16, %EDI		#shift right 16 to get top 16 bits	
 		CMPL DEST_Y(%ESI), %EDI
 		JNE notReachedDest
 
