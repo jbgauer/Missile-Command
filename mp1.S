@@ -641,7 +641,7 @@ mp1_ioctl_startgame:
 
 #int mp1_ioctl_addmissile(struct missile* user_missile)
 #this function allocates memory for a missile, stores it to the linked list
-#if it fails the memory is freed and -1 is returned. Success return 0.
+# if it fails the memory is freed and -1 is returned. Success return 0.
 #input: pointer to a struct missile that is being added
 #output: 0 if success, -1 if failed
 #registers:
