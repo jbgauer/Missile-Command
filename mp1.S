@@ -222,7 +222,7 @@ update_missiles:
 		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL $32			#empty char
+		PUSHL $EMPTYCHAR			#empty char
 		MOVL %EDX, %EDI 
 		SARL $TOPSHIFT, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes old top_y to stack
@@ -269,7 +269,7 @@ update_missiles:
 		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL $32			#empty char
+		PUSHL $EMPTYCHAR			#empty char
 		MOVL %EDX, %EDI 
 		SARL $TOPSHIFT, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes old top_y to stack
