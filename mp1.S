@@ -801,7 +801,10 @@ mp1_ioctl_getstatus:
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL $4				#n = 4
-		PUSHL $4(%ESP)				#from %EDI
+		XORL %EDI, %EDI
+		ADDL $4, %EDI
+		ADDL %ESP, %EDI
+		PUSHL $%EDI
 		PUSHL %ECX				#to %ECX
 		CALL mp1_copy_to_user
 		POPL %EDX 				#pop args
@@ -811,6 +814,7 @@ mp1_ioctl_getstatus:
 		POPL %ECX 
 		POPL %EAX
 
+		POPL %ESI
 		
 
 
