@@ -845,7 +845,7 @@ mp1_ioctl_getstatus:
 		
 		#16,17,18 are current cities 0 is destroyed, 1 is alive
 		MOVL $base_alive, %EDI
-		MOVB 0(%EDI), %BL 
+		MOVB 0(%EDI), %BL 		#first byte of base alive
 		CMPB $0, %BL			#is it alive?
 		JBE sndBase
 		ADDL $65536, %EDX		#value for a 1 at 16-bit
