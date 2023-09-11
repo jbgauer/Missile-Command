@@ -701,9 +701,9 @@ mp1_ioctl_movexhairs:
 		JMP eraseCrosshair
 
 	yUpper:
-		CMPL $23, %EBX 
+		CMPL $24, %EBX 
 		JLE eraseCrosshair				#if y <= 23 jmp
-		MOVL $23, %EBX 					#set y = 23
+		MOVL $24, %EBX 					#set y = 23
 
 	eraseCrosshair:
 		#erase crosshair
