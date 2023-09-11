@@ -872,7 +872,9 @@ mp1_ioctl_getstatus:
 		CALL mp1_malloc
 		POPL %EDX			#pop args
 		POPL %EDX
-		POPL %ECX 
+		POPL %ECX
+		CMPL $0, %EAX
+		JE failedStatus
 		MOVL %EAX, %EDI
 		MOVL %ESI, (%EDI)		#move value into memory address
 
@@ -907,8 +909,10 @@ mp1_ioctl_getstatus:
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX 
-	
-		
+		JMP returnStatus
+	failedStatus:
+		MOVL $-1, %EAX		#return 0
+	returnStatus:
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
