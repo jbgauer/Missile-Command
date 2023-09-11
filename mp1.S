@@ -251,7 +251,8 @@ update_missiles:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL C(%ESI)			#c char
+		MOVL C(%ESI), %EDI
+		PUSHL %EDI			#c char
 		MOVL Y(%ESI), %EDI 
 		SARL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_y to stack
