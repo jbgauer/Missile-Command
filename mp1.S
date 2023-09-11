@@ -583,7 +583,7 @@ mp1_ioctl_addmissile:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-
+	/*
 		#%ESI = arg
 		#%EDI = temp reg
 		MOVL 8(%EBP), %ESI 		#8 above ebp is arg
@@ -635,7 +635,7 @@ mp1_ioctl_addmissile:
 		MOVL %EBX, NEXT(%ESI)			# new ->next = head
 		MOVL %ESI, mp1_missile_list  		#head = new
 
-
+	*/
 	addEnd:
 		POPL %EDI
 		POPL %ESI
