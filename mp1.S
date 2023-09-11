@@ -127,14 +127,13 @@ mp1_ioctl:
 
 		JMP *jump_table(,%EAX,4)
 
-		jump_table:
-		.long mp1_ioctl_startgame, mp1_ioctl_addmissile, mp1_ioctl_movexhairs, mp1_ioctl_getstatus, mp1_ioctl_endgame
-
-
 	invalidCmd:
 		MOVL $-1, %EAX			#return -1
 
 		ret
+
+	jump_table:
+		.long mp1_ioctl_startgame, mp1_ioctl_addmissile, mp1_ioctl_movexhairs, mp1_ioctl_getstatus, mp1_ioctl_endgame
 
 
 # ----------------- Functions private to this file -------------------
