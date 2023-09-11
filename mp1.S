@@ -35,6 +35,10 @@
 
 	TOPSHIFT = 16
 
+	#arg is 8 shifted
+
+	ARG = 8
+
 
 # Data shared between this file and rtc.c helper functions
 
@@ -657,7 +661,7 @@ mp1_ioctl_addmissile:
 	
 		#%ESI = arg
 		#%EDI = temp reg
-		MOVL 8(%EBP), %ESI 		#8 above ebp is arg
+		MOVL ARG(%EBP), %ESI 		#8 above ebp is arg
 
 		#dynamic memory allocation
 		PUSHL %ECX			#caller save
@@ -733,7 +737,7 @@ mp1_ioctl_movexhairs:
 		PUSHL %EDI
 	
 		
-		MOVL 8(%EBP), %EDI			#args is 8 above ebp 
+		MOVL ARG(%EBP), %EDI			#args is 8 above ebp 
 		MOVL %EDI, %EBX
 		SARL $16, %EBX			#contains top 16 bit
 		MOVL %EDI, %ESI  
@@ -829,7 +833,7 @@ mp1_ioctl_getstatus:
 		
 		XORL %EDX, %EDX			#set edx = 0
 		XORL %ESI, %ESI
-		MOVL 8(%EBP), %ECX 		#arg is 8 above ebp
+		MOVL ARG(%EBP), %ECX 		#arg is 8 above ebp
 
 		#low-16 current score
 		MOVW mp1_score, %SI #moves mp1_score to low 16 of esi
@@ -837,26 +841,26 @@ mp1_ioctl_getstatus:
 		#16,17,18 are current cities 0 is destroyed, 1 is alive
 		MOVL $base_alive, %EDI
 		MOVB 0(%EDI), %BL 
-		CMPB $0, %BL
+		CMPB $0, %BL			#is it alive?
 		JBE sndBase
 		ADDL $65536, %EDX		#value for a 1 at 16-bit
 	sndBase:
 		MOVB 1(%EDI), %BL
-		CMPB $0, %BL
+		CMPB $0, %BL			#is it alive?
 		JBE thrdBase
 		ADDL $131072, %EDX		#value  for a 1 at 17-bit
 
 
 	thrdBase:
 		MOVB 2(%EDI), %BL
-		CMPB $0, %BL
+		CMPB $0, %BL			#is it alive?
 		JBE doneStatus
 		ADDL $262144, %EDX		#value  for a 1 at 18-bit
 
 	doneStatus:
 		ADDL %EDX, %ESI
 		#create space for esi
-		PUSHL %ECX
+		PUSHL %ECX		#caller save
 		PUSHL %EDX
 		PUSHL $4			#size of struct missile is 36 bytes
 		CALL mp1_malloc
@@ -864,9 +868,9 @@ mp1_ioctl_getstatus:
 		POPL %EDX
 		POPL %ECX 
 		MOVL %EAX, %EDI
-		MOVL %ESI, (%EDI)		#
+		MOVL %ESI, (%EDI)		#move value into memory address
 
-		PUSHL %EAX
+		PUSHL %EAX		#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL $4				#n = 4
@@ -881,7 +885,7 @@ mp1_ioctl_getstatus:
 		POPL %EAX
 
 		#free that space
-		PUSHL %EAX
+		PUSHL %EAX		#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL %EDI			#push memory address
