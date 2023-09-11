@@ -714,6 +714,11 @@ mp1_ioctl_addmissile:
 		leave
 		ret
 
+
+#int mp1_ioctl_movexhairs(unsigned long xhair_delta_packed)
+#this function moves the crosshair, making sure it doesnt go out of bounds 
+#input: unsigned long which top 16 stores y, and bottom 16 stores x.
+#output: always return 0
 mp1_ioctl_movexhairs:
 		#int mp1_ioctl_movexhairs(unsigned long xhair_delta_packed)
 		PUSHL %EBP				#callee setup
@@ -798,6 +803,12 @@ mp1_ioctl_movexhairs:
 		leave
 		ret
 
+#int mp1_ioctl_getstatus(unsigned long* user_status)
+#this function loads score into bottom 16, and status of three cities into 16,17,18
+#0 if destroyed, 1 if alive.
+#input: unsigned long* user_status which points to a memory address needed to 
+#copy to. 
+#output: 0 if successful, -1 if failed. 
 mp1_ioctl_getstatus:
 	
 		#int mp1 ioctl getstatus (unsigned long* user status)
@@ -882,6 +893,8 @@ mp1_ioctl_getstatus:
 		leave 
 		ret
 
+#int mp1_ioctl_endgame(unsigned long ignore)
+#
 mp1_ioctl_endgame:
 		PUSHL %EBP				#callee setup
 		MOVL %ESP, %EBP
