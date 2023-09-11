@@ -764,7 +764,7 @@ mp1_ioctl_getstatus:
 		POPL %EDX
 		POPL %ECX 
 
-		MOVL %ESI, (%EAX)
+		MOVL %ESI, (%EAX)		#
 
 		PUSHL %EAX
 		PUSHL %ECX
