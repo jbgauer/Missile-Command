@@ -913,7 +913,7 @@ mp1_ioctl_endgame:
 
 
 	endDone:
-		
+		MOVL $0, %EAX		#return success
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
