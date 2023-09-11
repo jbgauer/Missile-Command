@@ -650,7 +650,7 @@ mp1_ioctl_movexhairs:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-	/*
+	
 		#ESI = x change 
 		#EBX = y change
 		#EDI = temp reg 
@@ -720,7 +720,7 @@ mp1_ioctl_movexhairs:
 		POPL %EAX
 
 		MOVL $0, %EAX				#return 0
-	*/
+	
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
