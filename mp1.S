@@ -735,7 +735,7 @@ mp1_ioctl_getstatus:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-	/*
+	
 		#%ESI = hold main status
 		#%EDI = temp reg
 		#%EBX = temp reg
@@ -805,7 +805,7 @@ mp1_ioctl_getstatus:
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX 
-	*/
+	
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
