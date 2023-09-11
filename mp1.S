@@ -203,7 +203,27 @@ update_missiles:
 		MOVL EXPLODED(%ESI), %EDI
 		CMPL $0, %EDI				#if exploded == 0
 		JE eraseMissile
-
+		#-----------
+		#erase old position
+		#void mp1_printToScreen(X, Y, C)
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL $32			#empty char
+		MOVL %EDX, %EDI 
+		SARL $16, %EDI			#shifts to get top 16
+		PUSHL %EDI				#pushes old top_y to stack
+		MOVL %ECX, %EDI 
+		SARL $16, %EDI			#shifts to get top 16
+		PUSHL %EDI				#pushes old top_x to stack
+		CALL mp1_printToScreen
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX		#pop args
+		POPL %EDX
+		POPL %ECX 
+		POPL %EAX
+		#-----------------
 		#draw to screen with EXPLOSION Character
 		PUSHL %EAX
 		PUSHL %ECX
