@@ -770,7 +770,7 @@ mp1_ioctl_getstatus:
 		MOVL 8(%EBP), %ECX 		#arg is 8 above ebp
 
 		#low-16 current score
-		MOVW mp1_score, %ESI #moves mp1_score to low 16 of esi
+		MOVL mp1_score, %ESI #moves mp1_score to low 16 of esi
 		SARL $16, %ESI
 		#16,17,18 are current cities 0 is destroyed, 1 is alive
 		MOVL $base_alive, %EDI
