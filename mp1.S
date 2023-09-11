@@ -162,8 +162,6 @@ update_missiles:
 		JNE missileExploded 
 
 		#update x,y
-		
-
 		MOVL VX(%ESI), %EDI 
 		ADDL %EDI, X(%ESI) 			#x = x + vx 
 		MOVL X(%ESI), %EDI
@@ -588,7 +586,7 @@ mp1_ioctl_startgame:
 		#%EDI = temp reg
 		#initialize
 		MOVL $0, mp1_missile_list		#set head = null
-		MOVL $0, mp1_score				#score = 0
+		MOVW $0, mp1_score				#score = 0
 
 		MOVL $65793, base_alive		#setting bases alive = 00000000000000010000000100000001
 		#crosshair
