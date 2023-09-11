@@ -755,7 +755,7 @@ mp1_ioctl_getstatus:
 
 	doneStatus:
 		ADDL %EDX, %ESI
-		
+		#create space for esi
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL $4			#size of struct missile is 36 bytes
@@ -779,8 +779,18 @@ mp1_ioctl_getstatus:
 		POPL %EDX
 		POPL %ECX 
 		POPL %EAX
-		
 
+		#free that space
+
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL %EAX			#push memory address
+		CALL mp1_free
+		POPL %EDX			#pop args
+		POPL %EDX
+		POPL %ECX
+		POPL %EAX 
 
 		POPL %EDI
 		POPL %ESI
