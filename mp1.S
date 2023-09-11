@@ -868,7 +868,7 @@ mp1_ioctl_getstatus:
 		#create space for esi
 		PUSHL %ECX		#caller save
 		PUSHL %EDX
-		PUSHL $4			#size of struct missile is 36 bytes
+		PUSHL $4			#size of struct missile is 32 bit
 		CALL mp1_malloc
 		POPL %EDX			#pop args
 		POPL %EDX
