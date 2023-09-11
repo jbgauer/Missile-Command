@@ -771,19 +771,19 @@ mp1_ioctl_getstatus:
 		#16,17,18 are current cities 0 is destroyed, 1 is alive
 		MOVL $base_alive, %EDI
 		MOVB 0(%EDI), %BL 
-		CMP $0, %BL
+		CMPB $0, %BL
 		JBE sndBase
 		ADDL $65536, %EDX		#value for a 1 at 17-bit
 	sndBase:
 		MOVB 1(%EDI), %BL
-		CMP $0, %BL
+		CMPB $0, %BL
 		JBE thrdBase
 		ADDL $131072, %EDX		#value  for a 1 at 18-bit
 
 
 	thrdBase:
 		MOVB 2(%EDI), %BL
-		CMP $0, %BL
+		CMPB $0, %BL
 		JBE doneStatus
 		ADDL $262144, %EDX		#value  for a 1 at 19-bit
 
