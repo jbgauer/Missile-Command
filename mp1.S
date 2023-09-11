@@ -469,6 +469,11 @@ redraw_bases:
 		leave
 		ret
 
+#void redraw_crosshair(void)
+#redraws the crosshair at the specified x,y numbers stored
+#Input: none
+#output : none
+#Registers: standard c
 redraw_crosshair:
 		PUSHL %EBP				#callee setup
 		MOVL %ESP, %EBP
@@ -497,6 +502,15 @@ redraw_crosshair:
 		leave
 		ret
 
+#mp1_missile_remove(*curr, *prev)
+#takes in pointers to curr and prev and erases it from the screen, removes it from
+#the linked list, and then frees the missile in memory
+#input : pointer to current struct missile
+# pointer to previous struct missile
+#output: none
+#registers: 
+#ESI = curr
+#EBX = prev
 mp1_missile_remove:
 		PUSHL %EBP				#callee setup
 		MOVL %ESP, %EBP
@@ -557,15 +571,20 @@ mp1_missile_remove:
 		leave
 		ret
 
+#void mp1_printToScreen(int X, int Y,char C)
+#this function takes in x,y,c and calculates the value to draw it to memory
+#y*160+x*2. Then calls mp1_poke to draw to screen.
+#inputs: x-cord, y-cord, and c char.
+#outputs: none
+#registers:
+#%EDI = X 
+#%EDX = Y 
 mp1_printToScreen:
 		PUSHL %EBP				#callee setup
 		MOVL %ESP, %EBP
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		#void mp1_printToScreen(X, Y, C)
-		#%EDI = X 
-		#%EDX = Y 
 		MOVL 8(%EBP), %EDI		#x was pushed 4 bytes from ebp
 		MOVL 12(%EBP), %EDX		#y pushed 8 from ebp
 		MOVB 16(%EBP), %CL		#store c to CL
