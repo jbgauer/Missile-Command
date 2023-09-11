@@ -797,14 +797,14 @@ mp1_ioctl_getstatus:
 		POPL %EDX			#pop args
 		POPL %EDX
 		POPL %ECX 
-
-		MOVL %ESI, (%EAX)		#
+		MOVL %EAX, %EDI
+		MOVL %ESI, (%EDI)		#
 
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL $4				#n = 4
-		PUSHL %EAX				#from %ESI
+		PUSHL %EDI				#from %EDI
 		PUSHL %ECX				#to %ECX
 		CALL mp1_copy_to_user
 		POPL %EDX 				#pop args
@@ -819,7 +819,7 @@ mp1_ioctl_getstatus:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL %EAX			#push memory address
+		PUSHL %EDI			#push memory address
 		CALL mp1_free
 		POPL %EDX			#pop args
 		POPL %EDX
