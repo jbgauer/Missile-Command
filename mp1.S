@@ -591,6 +591,7 @@ mp1_ioctl_addmissile:
 		PUSHL %EDX
 		PUSHL $36			#size of struct missile is 36 bytes
 		CALL mp1_malloc
+		POPL %EDX			#pop args
 		POPL %EDX
 		POPL %ECX 
 		MOVL %EAX, %EDI
