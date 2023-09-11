@@ -756,12 +756,22 @@ mp1_ioctl_getstatus:
 	doneStatus:
 		ADDL %EDX, %ESI
 		
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL $4			#size of struct missile is 36 bytes
+		CALL mp1_malloc
+		POPL %EDX			#pop args
+		POPL %EDX
+		POPL %ECX 
+
+		MOVL %ESI, (%EAX)
+
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL $4				#n = 4
-		PUSHL %ESI				#from %ESI
-		PUSHL $%ECX				#to %ECX
+		PUSHL %EAX				#from %ESI
+		PUSHL %ECX				#to %ECX
 		CALL mp1_copy_to_user
 		POPL %EDX 				#pop args
 		POPL %EDX 				#pop args
