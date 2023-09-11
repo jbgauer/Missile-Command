@@ -475,8 +475,8 @@ mp1_missile_remove:
 		PUSHL %EDI
 		#ESI = curr
 		#EBX = prev
-		MOVL 4(%EBP), %ESI		#curr stored 4 above EBP
-		MOVL 8(%EBP), %EBX		#prev stored 8 above EBP
+		MOVL 8(%EBP), %ESI		#curr stored 4 above EBP
+		MOVL 12(%EBP), %EBX		#prev stored 8 above EBP
 
 		#erase from screen
 		PUSHL %EAX
