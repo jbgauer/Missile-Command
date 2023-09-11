@@ -482,7 +482,7 @@ mp1_missile_remove:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL EMPTYCHAR			#empty char
+		PUSHL $32				#empty char
 		MOVL Y(%ESI), %EDI 
 		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_y to stack
