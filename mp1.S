@@ -150,7 +150,7 @@ update_missiles:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		/*
+		
 		MOVL mp1_missile_list, %ESI 		#Moving head of missile list to ESI
 		CMPL $0, %ESI 
 		JE dontNotify					#if head = null end
@@ -316,7 +316,7 @@ update_missiles:
 		POPL %EDX
 		POPL %ECX 
 		POPL %EAX
-	*/
+	
 	dontNotify:	
 		POPL %EDI
 		POPL %ESI
