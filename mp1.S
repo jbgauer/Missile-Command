@@ -750,9 +750,10 @@ mp1_ioctl_getstatus:
 	thrdBase:
 		MOVB 2(%EDI), %BL
 		CMP $0, %BL
-		JBE thrdBase
+		JBE doneStatus
 		ADDL $131072, %EDX		#value  for a 1 at 18-bit
 
+	doneStatus:
 		ADDL %EDX, %ESI
 		
 		PUSHL %EAX
@@ -769,8 +770,6 @@ mp1_ioctl_getstatus:
 		POPL %ECX 
 		POPL %EAX
 		
-
-
 
 
 		POPL %EDI
