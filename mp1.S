@@ -901,6 +901,7 @@ mp1_ioctl_getstatus:
 		POPL %ECX
 		POPL %EAX 
 	
+		MOVL $0, %EAX		#return 0
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
