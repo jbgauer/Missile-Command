@@ -418,15 +418,15 @@ redraw_bases:
 		MOVL (%EDI, %EBX,1), %EDI
 		PUSHL %EDI
 
+		#y = 24
+		PUSHL $24
+
 		#x = 18 + (base_index * 20) + draw_index
 		MOVL %ESI, %EDI
 		IMULL $20, %EDI		#base_index * 20
 		ADDL $18, %EDI			#above + 18
 		ADDL %EBX, %EDI			#above + draw_index 
 		PUSHL %EDI
-		
-		#y = 24
-		PUSHL $24
 
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
