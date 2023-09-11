@@ -446,7 +446,7 @@ redraw_bases:
 		PUSHL %EDI
 
 		#y = 24
-		PUSHL $24
+		PUSHL $YUP
 
 		#x = 18 + (base_index * 20) + draw_index
 		MOVL %ESI, %EDI
@@ -494,7 +494,7 @@ redraw_crosshair:
 		PUSHL %ECX
 		PUSHL %EDX
 		#push c, y, x
-		PUSHL $43			#crosshair character
+		PUSHL $CROSSHAIRCHAR			#crosshair character
 		PUSHL crosshairs_y		#set X
 		PUSHL crosshairs_x		#set y 
 		CALL mp1_printToScreen
@@ -529,19 +529,19 @@ mp1_missile_remove:
 		PUSHL %EDI
 		#ESI = curr
 		#EBX = prev
-		MOVL 8(%EBP), %ESI		#curr stored 8 above EBP
+		MOVL ARG(%EBP), %ESI		#curr stored 8 above EBP
 		MOVL 12(%EBP), %EBX		#prev stored 12 above EBP
 
 		#erase from screen
 		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL $32				#empty char
+		PUSHL $EMPTYCHAR				#empty char
 		MOVL Y(%ESI), %EDI 
-		SHRL $16, %EDI			#shifts to get top 16
+		SHRL $TOPSHIFT, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_y to stack
 		MOVL X(%ESI), %EDI 
-		SHRL $16, %EDI			#shifts to get top 16
+		SHRL $TOPSHIFT, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
@@ -594,7 +594,7 @@ mp1_printToScreen:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		MOVL 8(%EBP), %EDI		#x was pushed 4 bytes from ebp
+		MOVL ARG(%EBP), %EDI		#x was pushed 4 bytes from ebp
 		MOVL 12(%EBP), %EDX		#y pushed 8 from ebp
 		MOVB 16(%EBP), %CL		#store c to CL
  
@@ -744,10 +744,10 @@ mp1_ioctl_movexhairs:
 		
 		MOVL ARG(%EBP), %EDI			#args is 8 above ebp 
 		MOVL %EDI, %EBX
-		SARL $16, %EBX			#contains top 16 bit
+		SARL $TOPSHIFT, %EBX			#contains top 16 bit
 		MOVL %EDI, %ESI  
-		SHLL $16, %ESI 
-		SARL $16, %ESI			#contains bottom 16 bit
+		SHLL $TOPSHIFT, %ESI 
+		SARL $TOPSHIFT, %ESI			#contains bottom 16 bit
 		#setting x
 		ADDL crosshairs_x, %ESI
 		CMPL $0, %ESI
@@ -756,9 +756,9 @@ mp1_ioctl_movexhairs:
 		JMP setY
 
 	xUpper:
-		CMPL $79, %ESI
+		CMPL $XUP, %ESI
 		JLE setY						#if x <= 79 jmp
-		MOVL $79, %ESI					#set x = 79
+		MOVL $XUP, %ESI					#set x = 79
 
 	setY:
 		ADDL crosshairs_y, %EBX 	
@@ -768,9 +768,9 @@ mp1_ioctl_movexhairs:
 		JMP eraseCrosshair
 
 	yUpper:
-		CMPL $24, %EBX 
+		CMPL $YUP, %EBX 
 		JLE eraseCrosshair				#if y <= 23 jmp
-		MOVL $24, %EBX 					#set y = 23
+		MOVL $YUP, %EBX 					#set y = 23
 
 	eraseCrosshair:
 		#erase crosshair
