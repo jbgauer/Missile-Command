@@ -751,19 +751,19 @@ mp1_ioctl_getstatus:
 		MOVB 0(%EDI), %BL 
 		CMP $0, %BL
 		JBE sndBase
-		ADDL $32768, %EDX		#value for a 1 at 16-bit
+		ADDL $65536, %EDX		#value for a 1 at 17-bit
 	sndBase:
 		MOVB 1(%EDI), %BL
 		CMP $0, %BL
 		JBE thrdBase
-		ADDL $65536, %EDX		#value  for a 1 at 17-bit
+		ADDL $131072, %EDX		#value  for a 1 at 18-bit
 
 
 	thrdBase:
 		MOVB 2(%EDI), %BL
 		CMP $0, %BL
 		JBE doneStatus
-		ADDL $131072, %EDX		#value  for a 1 at 18-bit
+		ADDL $262144, %EDX		#value  for a 1 at 19-bit
 
 	doneStatus:
 		ADDL %EDX, %ESI
