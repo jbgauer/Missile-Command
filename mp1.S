@@ -172,6 +172,7 @@ update_missiles:
 		CMPL $0, %ESI 
 		JE dontNotify					#if head = null end
 		XORL %EBX, %EBX 				#sets prev to 0
+		XORL %EAX, %EAX
 	top:
 		MOVL X(%ESI), %ECX 			#storing old x 
 		MOVL Y(%ESI), %EDX			#storing old y 
