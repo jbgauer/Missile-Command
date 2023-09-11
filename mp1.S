@@ -155,13 +155,14 @@ update_missiles:
 		JE dontNotify					#if head = null end
 		XORL %EBX, %EBX 				#sets prev to 0
 	top:
+		MOVL X(%ESI), %ECX 			#storing old x 
+		MOVL Y(%ESI), %EDX			#storing old y 
 		MOVL EXPLODED(%ESI), %EDI 		#storing 'exploded' in EDI
 		CMPL $0, %EDI				#checking if exploded
 		JNE missileExploded 
 
 		#update x,y
-		MOVL X(%ESI), %ECX 			#storing old x 
-		MOVL Y(%ESI), %EDX			#storing old y 
+		
 
 		MOVL VX(%ESI), %EDI 
 		ADDL %EDI, X(%ESI) 			#x = x + vx 
