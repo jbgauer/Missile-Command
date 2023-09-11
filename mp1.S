@@ -524,7 +524,7 @@ mp1_missile_remove:
 		MOVL 12(%EBP), %EBX		#prev stored 12 above EBP
 
 		#erase from screen
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL $32				#empty char
@@ -555,7 +555,7 @@ mp1_missile_remove:
 		
 	freeMissile:
 		#struct missile freed with mp1_free
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL %ESI 			#push curr pointer
@@ -660,7 +660,7 @@ mp1_ioctl_addmissile:
 		MOVL 8(%EBP), %ESI 		#8 above ebp is arg
 
 		#dynamic memory allocation
-		PUSHL %ECX
+		PUSHL %ECX			#caller save
 		PUSHL %EDX
 		PUSHL $36			#size of struct missile is 36 bytes
 		CALL mp1_malloc
@@ -672,7 +672,7 @@ mp1_ioctl_addmissile:
 		JE addFailed
 		
 		#data copy
-		PUSHL %ECX
+		PUSHL %ECX			#caller save
 		PUSHL %EDX
 		PUSHL $36			#size of struct missile is 36 bytes
 		PUSHL %ESI			#from
@@ -687,7 +687,7 @@ mp1_ioctl_addmissile:
 		JE addSuccess 		#all bytes added successfully 
 
 		#not added successfully so must free memory
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL %EDI			#push memory address
@@ -779,8 +779,8 @@ mp1_ioctl_movexhairs:
 		POPL %ECX 
 		POPL %EAX
 
-		MOVL %ESI, crosshairs_x
-		MOVL %EBX, crosshairs_y
+		MOVL %ESI, crosshairs_x		#set x 
+		MOVL %EBX, crosshairs_y	   #set y
 
 		#draw crosshair
 		PUSHL %EAX
