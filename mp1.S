@@ -121,7 +121,7 @@ mp1_ioctl:
 		
 		#%ESI = cmd
 		#%EBX = unsinged long arg
-		MOVL 12(%EBP), %EAX			#12 above EBP
+		MOVL 8(%ESP), %EAX			#12 above EBP
 		CMPL $4, %EAX 
 		JA invalidCmd				#jmp if invalid
 
@@ -816,7 +816,7 @@ mp1_ioctl_endgame:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-		
+
 		#%ESI = curr ptr
 		#%EBX = next ptr
 		#free all memory in linked list
