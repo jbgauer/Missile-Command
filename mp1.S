@@ -787,7 +787,7 @@ mp1_ioctl_movexhairs:
 		PUSHL %ECX
 		PUSHL %EDX
 		#c
-		PUSHL $43			#'+' char
+		PUSHL $CROSSHAIRCHAR			#'+' char
 		#Y
 		PUSHL crosshairs_y
 		#X
