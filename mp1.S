@@ -167,13 +167,13 @@ update_missiles:
 		MOVL VX(%ESI), %EDI 
 		ADDL %EDI, X(%ESI) 			#x = x + vx 
 		MOVL X(%ESI), %EDI
-		SHRL $16, %EDI			#shift right 16 to get top 16 bits	
+		SARL $16, %EDI			#shift right 16 to get top 16 bits	
 		CMPL $79, %EDI
 		JA outOfBounds				#jmp if x < 0 || x > 79
 		MOVL VY(%ESI), %EDI
 		ADDL %EDI, Y(%ESI)			#y = y + vy 
 		MOVL Y(%ESI), %EDI
-		SHRL $16, %EDI		#shift right 16 to get top 16 bits	
+		SARL $16, %EDI		#shift right 16 to get top 16 bits	
 		CMPL $24, %EDI
 		JA outOfBounds				#jmp if y > 24 || y < 0
 
