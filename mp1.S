@@ -291,7 +291,7 @@ update_missiles:
 		PUSHL %ESI 		#pushes argument head pointer
 		CALL mp1_missile_remove			#removes missile
 		POPL %EDX 		#pop args
-		POPL %EDX		
+		POPL %EDX		#pop args
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX
@@ -475,8 +475,8 @@ mp1_missile_remove:
 		PUSHL %EDI
 		#ESI = curr
 		#EBX = prev
-		MOVL 8(%EBP), %ESI		#curr stored 4 above EBP
-		MOVL 12(%EBP), %EBX		#prev stored 8 above EBP
+		MOVL 8(%EBP), %ESI		#curr stored 8 above EBP
+		MOVL 12(%EBP), %EBX		#prev stored 12 above EBP
 
 		#erase from screen
 		PUSHL %EAX
@@ -513,8 +513,7 @@ mp1_missile_remove:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		MOVL NEXT(%ESI), %EDI
-		PUSHL %EDI			#push curr pointer
+		PUSHL %ESI 			#push curr pointer
 		CALL mp1_free
 		POPL %EDX			#pop args
 		POPL %EDX
