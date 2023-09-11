@@ -306,7 +306,7 @@ update_missiles:
 		JNE top				#if there is a next missile go to top
 
 		CMPL $0, %EAX
-		JNE dontNotify
+		JE dontNotify
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
