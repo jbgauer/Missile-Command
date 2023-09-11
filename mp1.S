@@ -818,7 +818,7 @@ mp1_ioctl_endgame:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-	/*
+	
 		#%ESI = curr ptr
 		#%EBX = next ptr
 		#free all memory in linked list
@@ -843,8 +843,7 @@ mp1_ioctl_endgame:
 
 
 	endDone:
-		MOVL $0, mp1_missile_list			#sets link list to null
-		*/
+		
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
