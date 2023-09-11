@@ -118,20 +118,14 @@ mp1_rtc_tasklet:
 
 .globl mp1_ioctl
 mp1_ioctl:
-		PUSHL %EBP				#callee setup
-		MOVL %ESP, %EBP
-		PUSHL %EBX
-		PUSHL %ESI 
-		PUSHL %EDI
 		
-
 		#%ESI = cmd
 		#%EBX = unsinged long arg
-		MOVL 12(%EBP), %ESI			#12 above EBP
-		CMPL $4, %ESI 
+		MOVL 12(%EBP), %EAX			#12 above EBP
+		CMPL $4, %EAX 
 		JA invalidCmd				#jmp if invalid
 
-		JMP *jump_table(,%ESI,4)
+		JMP *jump_table(,%EAX,4)
 
 		jump_table:
 		.long mp1_ioctl_startgame, mp1_ioctl_addmissile, mp1_ioctl_movexhairs, mp1_ioctl_getstatus, mp1_ioctl_endgame
@@ -140,10 +134,6 @@ mp1_ioctl:
 	invalidCmd:
 		MOVL $-1, %EAX			#return -1
 
-		POPL %EDI
-		POPL %ESI
-		POPL %EBX
-		leave
 		ret
 
 
@@ -561,7 +551,12 @@ mp1_printToScreen:
 #original functions
 
 mp1_ioctl_startgame:
-		
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+
 		#%EDI = temp reg
 		#initialize
 		MOVL $0, mp1_missile_list		#set head = null
@@ -581,7 +576,12 @@ mp1_ioctl_startgame:
 
 mp1_ioctl_addmissile:
 		#int mp1_ioctl_addmissile (struct missile* user_missile)
-		
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+
 		#%ESI = arg
 		#%EDI = temp reg
 		MOVL 8(%EBP), %ESI 		#8 above ebp is arg
@@ -643,7 +643,12 @@ mp1_ioctl_addmissile:
 
 mp1_ioctl_movexhairs:
 		#int mp1_ioctl_movexhairs(unsigned long xhair_delta_packed)
-		
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+
 		#ESI = x change 
 		#EBX = y change
 		#EDI = temp reg 
@@ -723,7 +728,12 @@ mp1_ioctl_movexhairs:
 mp1_ioctl_getstatus:
 
 		#int mp1 ioctl getstatus (unsigned long* user status)
-		
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+
 		#%ESI = hold main status
 		#%EDI = temp reg
 		#%EBX = temp reg
@@ -801,7 +811,12 @@ mp1_ioctl_getstatus:
 		ret
 
 mp1_ioctl_endgame:
-	
+		PUSHL %EBP				#callee setup
+		MOVL %ESP, %EBP
+		PUSHL %EBX
+		PUSHL %ESI 
+		PUSHL %EDI
+		
 		#%ESI = curr ptr
 		#%EBX = next ptr
 		#free all memory in linked list
