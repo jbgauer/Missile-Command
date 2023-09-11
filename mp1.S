@@ -289,7 +289,7 @@ update_missiles:
 		POPL %EAX
 
 		#special increment
-		CMPL 0, %EBX 	#checking if prev = 0
+		CMPL $0, %EBX 	#checking if prev = 0
 		JNE notBeginList
 		#beginning of list
 		MOVL mp1_missile_list, %ESI		#set curr = head
