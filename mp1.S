@@ -876,8 +876,9 @@ mp1_ioctl_getstatus:
 		MOVL %EAX, %EDI
 		MOVL %ESI, (%EDI)		#move value into memory address
 
-		PUSHL %EAX		#caller save
+		
 		PUSHL %ECX
+		PUSHL %EAX		#caller save
 		PUSHL %EDX
 		PUSHL $4				#n = 4
 		PUSHL %EDI				#from %EDI
@@ -888,8 +889,14 @@ mp1_ioctl_getstatus:
 		POPL %EDX 				#pop args
 		POPL %EDX
 		POPL %ECX 
-		POPL %EAX
-
+		POPL %ECX
+		CMPL $0, %EAX
+		JE successStatus
+		MOVL $-1, %EAX
+		JMP freeStatus
+	successStatus:
+		MOVL $0, %EAX		#return 0
+	freeStatus:
 		#free that space
 		PUSHL %EAX		#caller save
 		PUSHL %ECX
@@ -901,7 +908,7 @@ mp1_ioctl_getstatus:
 		POPL %ECX
 		POPL %EAX 
 	
-		MOVL $0, %EAX		#return 0
+		
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
