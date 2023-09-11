@@ -48,12 +48,12 @@
 # Data shared between this file and rtc.c helper functions
 
 # This '.globl' directive makes these symbols visible externally
-.globl mp1_missile_list, base_alive, mp1_score
+.globl mp1_missile_list, base_alive, mp1_score, gameDone
 
 mp1_missile_list:	.long 0x0	# Head of list pointer
 base_alive:		.long 0x0	# Array of 3 bytes, plus a padding byte
 mp1_score:		.long 0x0	# Player's current score
-
+gameDone: 		.long 0x0  #tracks game done 
 
 # Data private to this  file
 
@@ -102,11 +102,12 @@ mp1_rtc_tasklet:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-
+		CMPL $0, gameDone		#is game done?
+		JE doneTasklet
 		CALL update_missiles
 		CALL redraw_bases
 		CALL redraw_crosshair
-
+	doneTasklet:
 		POPL %EDX
 		POPL %ECX 
 		POPL %EAX
