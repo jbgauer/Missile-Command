@@ -720,6 +720,7 @@ mp1_ioctl_movexhairs:
 		ret
 
 mp1_ioctl_getstatus:
+/*
 		#int mp1 ioctl getstatus (unsigned long* user status)
 		
 		#%ESI = hold main status
@@ -790,7 +791,7 @@ mp1_ioctl_getstatus:
 		POPL %EDX			#pop args
 		POPL %EDX
 		POPL %ECX
-		POPL %EAX 
+		POPL %EAX */
 
 		POPL %EDI
 		POPL %ESI
