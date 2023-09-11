@@ -728,14 +728,14 @@ mp1_ioctl_movexhairs:
 		ret
 
 mp1_ioctl_getstatus:
-
+	
 		#int mp1 ioctl getstatus (unsigned long* user status)
 		PUSHL %EBP				#callee setup
 		MOVL %ESP, %EBP
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-
+	/*
 		#%ESI = hold main status
 		#%EDI = temp reg
 		#%EBX = temp reg
@@ -805,11 +805,11 @@ mp1_ioctl_getstatus:
 		POPL %EDX
 		POPL %ECX
 		POPL %EAX 
-
+	*/
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
-		leave
+		leave 
 		ret
 
 mp1_ioctl_endgame:
@@ -818,7 +818,7 @@ mp1_ioctl_endgame:
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
-
+	/*
 		#%ESI = curr ptr
 		#%EBX = next ptr
 		#free all memory in linked list
@@ -844,6 +844,7 @@ mp1_ioctl_endgame:
 
 	endDone:
 		MOVL $0, mp1_missile_list			#sets link list to null
+		*/
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
