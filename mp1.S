@@ -502,7 +502,7 @@ redraw_crosshair:
 		leave
 		ret
 
-#mp1_missile_remove(*curr, *prev)
+#mp1_missile_remove(struct missile *curr, struct missile *prev)
 #takes in pointers to curr and prev and erases it from the screen, removes it from
 #the linked list, and then frees the missile in memory
 #input : pointer to current struct missile
@@ -609,7 +609,12 @@ mp1_printToScreen:
 
 #original functions
 
-
+#int mp1_ioctl_startgame(unsigned long ignore)
+#function initializes all variables, sets crosshair, and sets all bases alive.
+#input : none
+#output: ignore
+#registers:
+#%EDI = temp reg
 mp1_ioctl_startgame:
 		PUSHL %EBP				#callee setup
 		MOVL %ESP, %EBP
@@ -617,7 +622,7 @@ mp1_ioctl_startgame:
 		PUSHL %ESI 
 		PUSHL %EDI
 
-		#%EDI = temp reg
+		
 		#initialize
 		MOVL $0, mp1_missile_list		#set head = null
 		MOVW $0, mp1_score				#score = 0
@@ -634,6 +639,14 @@ mp1_ioctl_startgame:
 		leave
 		ret
 
+#int mp1_ioctl_addmissile(struct missile* user_missile)
+#this function allocates memory for a missile, stores it to the linked list
+#if it fails the memory is freed and -1 is returned. Success return 0.
+#input: pointer to a struct missile that is being added
+#output: 0 if success, -1 if failed
+#registers:
+#%ESI = arg (struct missile*)
+#%EDI = temp reg
 mp1_ioctl_addmissile:
 		#int mp1_ioctl_addmissile (struct missile* user_missile)
 		PUSHL %EBP				#callee setup
