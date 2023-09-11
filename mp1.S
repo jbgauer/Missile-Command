@@ -241,7 +241,7 @@ update_missiles:
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL EMPTYCHAR			#empty char
+		PUSHL $32			#empty char
 		MOVL %EDX, %EDI 
 		SHRL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes old top_y to stack
