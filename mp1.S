@@ -630,10 +630,10 @@ mp1_ioctl_addmissile:
 		MOVL $-1, %EAX			#return -1
 		JMP addEnd
 	addSuccess:
-		MOVL $0, %EAX			#return 0
-		MOVL mp1_missile_list, %EBX
-		MOVL %EBX, NEXT(%ESI)			# new ->next = head
-		MOVL %ESI, mp1_missile_list  		#head = new
+		MOVL mp1_missile_list, %EDI
+		MOVL %EDI, NEXT(%EDI)			# new ->next = head
+		MOVL %EDI, mp1_missile_list  		#head = new
+		MOVL $0, %EAX					#return 0
 
 	
 	addEnd:
