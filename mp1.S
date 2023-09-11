@@ -39,6 +39,11 @@
 
 	ARG = 8
 
+	#X upper bounds
+	XUP = 79
+	#Y upper bounds
+	YUP = 24
+
 
 # Data shared between this file and rtc.c helper functions
 
@@ -179,13 +184,13 @@ update_missiles:
 		ADDL %EDI, X(%ESI) 			#x = x + vx 
 		MOVL X(%ESI), %EDI
 		SARL $TOPSHIFT, %EDI			#shift right 16 to get top 16 bits	
-		CMPL $79, %EDI
+		CMPL $XUP, %EDI
 		JA outOfBounds				#jmp if x < 0 || x > 79
 		MOVL VY(%ESI), %EDI
 		ADDL %EDI, Y(%ESI)			#y = y + vy 
 		MOVL Y(%ESI), %EDI
 		SARL $TOPSHIFT, %EDI		#shift right 16 to get top 16 bits	
-		CMPL $24, %EDI
+		CMPL $YUP, %EDI
 		JA outOfBounds				#jmp if y > 24 || y < 0
 
 		#has missile reached dest?
@@ -242,7 +247,7 @@ update_missiles:
 		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
-		PUSHL $64			#exploded char
+		PUSHL $EXPLOSION		#exploded char
 		MOVL Y(%ESI), %EDI 
 		SARL $TOPSHIFT, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_y to stack
@@ -403,7 +408,7 @@ redraw_bases:
 		PUSHL %EDI
 
 		#y = 24
-		PUSHL $24
+		PUSHL $YUP
 
 		#x = 18 + (base_index * 20) + draw_index
 		MOVL %ESI, %EDI
