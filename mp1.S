@@ -794,17 +794,21 @@ mp1_ioctl_getstatus:
 	doneStatus:
 		ADDL %EDX, %ESI
 		#create space for esi
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL $4			#size of struct missile is 36 bytes
+		CALL mp1_malloc
+		POPL %EDX			#pop args
+		POPL %EDX
+		POPL %ECX 
+		MOVL %EAX, %EDI
+		MOVL %ESI, (%EDI)		#
 
-		PUSHL %ESI
-		
 		PUSHL %EAX
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL $4				#n = 4
-		XORL %EDI, %EDI
-		ADDL $4, %EDI
-		ADDL %ESP, %EDI
-		PUSHL $%EDI
+		PUSHL %EDI				#from %EDI
 		PUSHL %ECX				#to %ECX
 		CALL mp1_copy_to_user
 		POPL %EDX 				#pop args
@@ -814,14 +818,18 @@ mp1_ioctl_getstatus:
 		POPL %ECX 
 		POPL %EAX
 
-		POPL %ESI
-		
+		#free that space
 
-
-
-
-
-
+		PUSHL %EAX
+		PUSHL %ECX
+		PUSHL %EDX
+		PUSHL %EDI			#push memory address
+		CALL mp1_free
+		POPL %EDX			#pop args
+		POPL %EDX
+		POPL %ECX
+		POPL %EAX 
+	
 		POPL %EDI
 		POPL %ESI
 		POPL %EBX
