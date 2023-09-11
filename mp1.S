@@ -215,7 +215,7 @@ update_missiles:
 		
 		#erase old position
 		#void mp1_printToScreen(X, Y, C)
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL $32			#empty char
@@ -235,7 +235,7 @@ update_missiles:
 		
 		
 		#draw to screen with EXPLOSION Character
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL $64			#exploded char
@@ -262,7 +262,7 @@ update_missiles:
 		#has screen position changed?
 		#erase old position
 		#void mp1_printToScreen(X, Y, C)
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		PUSHL $32			#empty char
@@ -281,7 +281,7 @@ update_missiles:
 		POPL %EAX
 
 		#re-draw in new postiion
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		MOVL C(%ESI), %EDI
@@ -309,7 +309,7 @@ update_missiles:
 		#erase missile
 		#void mp1_missile_remove(head, prev)
 
-		PUSHL %EAX 
+		PUSHL %EAX 			#caller save
 		PUSHL %ECX 
 		PUSHL %EDX 
 		PUSHL %EBX		#pushes argument prev pointer
@@ -342,7 +342,7 @@ update_missiles:
 
 		CMPL $0, %EAX
 		JE dontNotify
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		CALL mp1_notify_user 		#notify user-space
@@ -351,7 +351,7 @@ update_missiles:
 		POPL %EAX
 	
 	dontNotify:	
-		POPL %EDI
+		POPL %EDI		#pop back out
 		POPL %ESI
 		POPL %EBX
 		leave
@@ -380,7 +380,7 @@ redraw_bases:
 		XORL %ECX, %ECX		#ecx = 0
 	topLoop:
 		MOVL $base_alive, %EDI
-		MOVB (%EDI, %ESI,1), %DL
+		MOVB (%EDI, %ESI,1), %DL	#increment and move to dl
 		CMPB $0, %DL
 		JE	baseDestroyed		#jmp if base not destroyed
 		
@@ -389,7 +389,7 @@ redraw_bases:
 
 	notDestroyedLoop:
 		#print out base
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		#push c, y , x
@@ -416,8 +416,8 @@ redraw_bases:
 		POPL %ECX 
 		POPL %EAX
 		
-		ADDL $1, %EBX
-		CMPL $4, %EBX 
+		ADDL $1, %EBX		#increment draw_index
+		CMPL $4, %EBX 			
 		JBE notDestroyedLoop			#loop if draw_index <= 4
 		JMP nextIndex
 
@@ -427,7 +427,7 @@ redraw_bases:
 		XORL %EBX, %EBX 		#draw_index = 0
 	destroyedLoop:
 		#print out base
-		PUSHL %EAX
+		PUSHL %EAX				#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		#push c, y , x
@@ -481,13 +481,13 @@ redraw_crosshair:
 		PUSHL %ESI 
 		PUSHL %EDI
 		#redraw crosshair
-		PUSHL %EAX
+		PUSHL %EAX			#caller save
 		PUSHL %ECX
 		PUSHL %EDX
 		#push c, y, x
 		PUSHL $43			#crosshair character
-		PUSHL crosshairs_y
-		PUSHL crosshairs_x
+		PUSHL crosshairs_y		#set X
+		PUSHL crosshairs_x		#set y 
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
 		POPL %EDX		#pop args
