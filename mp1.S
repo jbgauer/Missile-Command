@@ -209,10 +209,10 @@ update_missiles:
 		PUSHL %EDX
 		PUSHL $64			#exploded char
 		MOVL Y(%ESI), %EDI 
-		SHRL $16, %EDI			#shifts to get top 16
+		SARL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_y to stack
 		MOVL X(%ESI), %EDI 
-		SHRL $16, %EDI			#shifts to get top 16
+		SARL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
@@ -233,10 +233,10 @@ update_missiles:
 		PUSHL %EDX
 		PUSHL $32			#empty char
 		MOVL %EDX, %EDI 
-		SHRL $16, %EDI			#shifts to get top 16
+		SARL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes old top_y to stack
 		MOVL %ECX, %EDI 
-		SHRL $16, %EDI			#shifts to get top 16
+		SARL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes old top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
@@ -252,10 +252,10 @@ update_missiles:
 		PUSHL %EDX
 		PUSHL C(%ESI)			#c char
 		MOVL Y(%ESI), %EDI 
-		SHRL $16, %EDI			#shifts to get top 16
+		SARL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_y to stack
 		MOVL X(%ESI), %EDI 
-		SHRL $16, %EDI			#shifts to get top 16
+		SARL $16, %EDI			#shifts to get top 16
 		PUSHL %EDI				#pushes top_x to stack
 		CALL mp1_printToScreen
 		POPL %EDX		#pop args
