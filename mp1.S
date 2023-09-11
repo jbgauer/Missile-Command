@@ -137,15 +137,24 @@ mp1_ioctl:
 
 
 # ----------------- Functions private to this file -------------------
+# void update_missiles(void)
+#Subroutine for tasklet that processes the missiles. It will see if the missile
+#is exploding, if it is draw @ and decrement unti reaches 0, which will erase 
+#the missile. If its not exploding it updates x,y and erases new location and 
+#redraws it. 
+# Input: none
+# Output: none
+# Registers: 
+#%ESI = head pointer
+#%EBX = prev pointer
+#%EDI = temp store
+#%ECX = old x
+#%EDX = old y 
 
 update_missiles:
 		PUSHL %EBP				#callee setup
 		MOVL %ESP, %EBP
-		#%ESI = head pointer
-		#%EBX = prev pointer
-		#%EDI = temp store
-		#%ECX = old x
-		#%EDX = old y 
+		
 		PUSHL %EBX
 		PUSHL %ESI 
 		PUSHL %EDI
@@ -348,7 +357,17 @@ update_missiles:
 		leave
 		ret
 
-#new functions
+#void redraw_bases(void)
+#Subroutine for tasklet in charge of drawing the bases to the screen. If 
+#base is destroyed, draw destroyed base, else draw alive base.
+#Input: none
+#output: none
+#Registers: 
+#%ESI = base_index
+#%EBX = draw_index
+#%EDI = temp store
+#%EDX = temp store
+#%ECX = base_counter 
 
 redraw_bases:
 		PUSHL %EBP				#callee setup
@@ -357,11 +376,6 @@ redraw_bases:
 		PUSHL %ESI 
 		PUSHL %EDI
 
-		#%ESI = base_index
-		#%EBX = draw_index
-		#%EDI = temp store
-		#%EDX = temp store
-		#%ECX = base_counter 
 		XORL %ESI, %ESI		#esi = 0
 		XORL %ECX, %ECX		#ecx = 0
 	topLoop:
@@ -872,6 +886,3 @@ mp1_ioctl_endgame:
 		POPL %EBX
 		leave
 		ret
-
-
-
